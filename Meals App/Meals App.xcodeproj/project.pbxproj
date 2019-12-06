@@ -9,21 +9,23 @@
 /* Begin PBXBuildFile section */
 		87554A0B2397C12600A1DC75 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87554A0A2397C12600A1DC75 /* AppDelegate.swift */; };
 		87554A0D2397C12600A1DC75 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87554A0C2397C12600A1DC75 /* SceneDelegate.swift */; };
-		87554A0F2397C12600A1DC75 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87554A0E2397C12600A1DC75 /* ViewController.swift */; };
 		87554A122397C12600A1DC75 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87554A102397C12600A1DC75 /* Main.storyboard */; };
 		87554A142397C12800A1DC75 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87554A132397C12800A1DC75 /* Assets.xcassets */; };
 		87554A172397C12800A1DC75 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87554A152397C12800A1DC75 /* LaunchScreen.storyboard */; };
+		87554A2C239A771600A1DC75 /* RecipeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87554A2B239A771600A1DC75 /* RecipeCell.xib */; };
+		87554A2E239A772400A1DC75 /* RecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87554A2D239A772400A1DC75 /* RecipeCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		87554A072397C12600A1DC75 /* Meals App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Meals App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		87554A0A2397C12600A1DC75 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		87554A0C2397C12600A1DC75 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		87554A0E2397C12600A1DC75 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		87554A112397C12600A1DC75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		87554A132397C12800A1DC75 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		87554A162397C12800A1DC75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		87554A182397C12800A1DC75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		87554A2B239A771600A1DC75 /* RecipeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecipeCell.xib; sourceTree = "<group>"; };
+		87554A2D239A772400A1DC75 /* RecipeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +58,40 @@
 		87554A092397C12600A1DC75 /* Meals App */ = {
 			isa = PBXGroup;
 			children = (
+				87554A27239A764A00A1DC75 /* Recipe Cell */,
 				87554A0A2397C12600A1DC75 /* AppDelegate.swift */,
 				87554A0C2397C12600A1DC75 /* SceneDelegate.swift */,
-				87554A0E2397C12600A1DC75 /* ViewController.swift */,
 				87554A102397C12600A1DC75 /* Main.storyboard */,
 				87554A132397C12800A1DC75 /* Assets.xcassets */,
 				87554A152397C12800A1DC75 /* LaunchScreen.storyboard */,
 				87554A182397C12800A1DC75 /* Info.plist */,
 			);
 			path = "Meals App";
+			sourceTree = "<group>";
+		};
+		87554A27239A764A00A1DC75 /* Recipe Cell */ = {
+			isa = PBXGroup;
+			children = (
+				87554A29239A76D200A1DC75 /* Controller */,
+				87554A28239A76C400A1DC75 /* View */,
+			);
+			path = "Recipe Cell";
+			sourceTree = "<group>";
+		};
+		87554A28239A76C400A1DC75 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				87554A2B239A771600A1DC75 /* RecipeCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		87554A29239A76D200A1DC75 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				87554A2D239A772400A1DC75 /* RecipeCell.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -128,6 +155,7 @@
 				87554A172397C12800A1DC75 /* LaunchScreen.storyboard in Resources */,
 				87554A142397C12800A1DC75 /* Assets.xcassets in Resources */,
 				87554A122397C12600A1DC75 /* Main.storyboard in Resources */,
+				87554A2C239A771600A1DC75 /* RecipeCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,7 +166,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87554A0F2397C12600A1DC75 /* ViewController.swift in Sources */,
+				87554A2E239A772400A1DC75 /* RecipeCell.swift in Sources */,
 				87554A0B2397C12600A1DC75 /* AppDelegate.swift in Sources */,
 				87554A0D2397C12600A1DC75 /* SceneDelegate.swift in Sources */,
 			);
@@ -287,14 +315,16 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = S2R484H276;
 				INFOPLIST_FILE = "Meals App/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ioscourse.Meals-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -305,14 +335,16 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = S2R484H276;
 				INFOPLIST_FILE = "Meals App/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ioscourse.Meals-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
