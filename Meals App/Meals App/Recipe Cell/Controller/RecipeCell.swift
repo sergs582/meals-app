@@ -1,10 +1,4 @@
-//
-//  FavouriteCell.swift
-//  Fridgy Recipes
-//
-//  Created by Сергей on 22.11.2019.
-//  Copyright © 2019 Сергей. All rights reserved.
-//
+
 
 import UIKit
 
@@ -24,9 +18,7 @@ class RecipeCell: UITableViewCell {
     }
     
     func commonInit(){
-        imageForCell.image = UIImage.init(named: imageName!)
-        title.text = titleText
-        shortDescription.text = descriptionText
+
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

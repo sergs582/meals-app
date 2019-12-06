@@ -11,12 +11,12 @@
         <!--Favourite-->
         <scene sceneID="mVn-Ef-ApD">
             <objects>
-                <viewController id="ve3-TI-eAu" customClass="FavouriteViewController" customModule="Fridgy_Recipes" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ve3-TI-eAu" customClass="FavouriteViewController" customModule="Meals_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qq4-5W-nj4">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3d0-c3-6LX">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3d0-c3-6LX" customClass="FavouriteTable" customModule="Meals_App" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="131" width="414" height="682"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <sections/>
@@ -29,7 +29,7 @@
                                 </segments>
                                 <color key="selectedSegmentTintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
-                                    <action selector="segmentChange:" destination="ve3-TI-eAu" eventType="valueChanged" id="M8S-dq-6N4"/>
+                                    <action selector="segmentChanged:" destination="ve3-TI-eAu" eventType="valueChanged" id="W7D-Xr-evQ"/>
                                 </connections>
                             </segmentedControl>
                         </subviews>
@@ -47,8 +47,8 @@
                     </view>
                     <navigationItem key="navigationItem" title="Favourite" id="uUU-nY-VLf"/>
                     <connections>
-                        <outlet property="segmentedControl" destination="cVF-WQ-RNx" id="W0Q-u7-a98"/>
-                        <outlet property="table" destination="3d0-c3-6LX" id="dFr-Zf-s5Q"/>
+                        <outlet property="RecipesTable" destination="3d0-c3-6LX" id="sBn-Dp-H6F"/>
+                        <outlet property="segmentedControl" destination="cVF-WQ-RNx" id="bGa-bc-jsi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="37q-xC-2Gj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -265,6 +265,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="M6i-fC-tCI">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

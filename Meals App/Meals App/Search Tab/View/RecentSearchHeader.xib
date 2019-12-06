@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RecentSearchHeader" customModule="Meals_App" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="Uav-jv-tDQ" customClass="RecentSearchHeader" customModule="Meals_App" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recent" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LfK-RQ-Teu">
+                    <rect key="frame" x="20" y="13" width="80" height="31"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="80" id="V9x-fS-gfy"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VHG-GJ-8fK">
+                    <rect key="frame" x="344" y="10" width="50" height="34"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="R1X-5l-UO5"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <state key="normal" title="Clear">
+                        <color key="titleColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="clear:" destination="Uav-jv-tDQ" eventType="touchUpInside" id="e4A-2n-q78"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kWe-OF-B4f">
+                    <rect key="frame" x="20" y="49" width="394" height="1"/>
+                    <color key="backgroundColor" name="Separator Color"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="uuh-eX-yy0"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <constraints>
+                <constraint firstItem="VHG-GJ-8fK" firstAttribute="top" secondItem="VWW-ns-L6h" secondAttribute="top" constant="10" id="6ra-sg-Uvy"/>
+                <constraint firstItem="kWe-OF-B4f" firstAttribute="top" secondItem="VHG-GJ-8fK" secondAttribute="bottom" constant="5" id="Jp2-nT-SPP"/>
+                <constraint firstAttribute="trailing" secondItem="kWe-OF-B4f" secondAttribute="trailing" id="K1V-mD-eed"/>
+                <constraint firstItem="VWW-ns-L6h" firstAttribute="trailing" secondItem="VHG-GJ-8fK" secondAttribute="trailing" constant="20" id="Lx3-9z-pai"/>
+                <constraint firstItem="LfK-RQ-Teu" firstAttribute="leading" secondItem="VWW-ns-L6h" secondAttribute="leading" constant="20" id="Ohq-kW-YDT"/>
+                <constraint firstItem="kWe-OF-B4f" firstAttribute="leading" secondItem="Uav-jv-tDQ" secondAttribute="leading" constant="20" id="YzF-Hu-ayn"/>
+                <constraint firstItem="LfK-RQ-Teu" firstAttribute="top" secondItem="VWW-ns-L6h" secondAttribute="top" constant="13" id="jVT-b9-I9a"/>
+                <constraint firstAttribute="bottom" secondItem="kWe-OF-B4f" secondAttribute="bottom" id="nW9-d2-51z"/>
+                <constraint firstItem="kWe-OF-B4f" firstAttribute="top" secondItem="LfK-RQ-Teu" secondAttribute="bottom" constant="5" id="s1K-jR-ckd"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="VWW-ns-L6h"/>
+            <point key="canvasLocation" x="-257.60000000000002" y="0.89955022488755632"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="Separator Color">
+            <color red="0.88235294117647056" green="0.88235294117647056" blue="0.88627450980392153" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>
