@@ -8,7 +8,7 @@ class FavouriteTable: UITableView, UITableViewDataSource, UITableViewDelegate {
 //    var titles : [String]?
 //    var descriptions : [String]?
     
-    //weak var resultsDelegate : RecipeResultsDelegate?
+    weak var resultsDelegate : RecipeResultsDelegate?
     
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
@@ -46,7 +46,7 @@ class FavouriteTable: UITableView, UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //resultsDelegate?.didSelectResult(cell: tableView.cellForRow(at: indexPath)!)
+        resultsDelegate?.didSelectResult(cell: tableView.cellForRow(at: indexPath)!)
     }
 
 

@@ -88,10 +88,10 @@
             </objects>
             <point key="canvasLocation" x="41" y="258"/>
         </scene>
-        <!--View Controller-->
+        <!--Recipe View Controller-->
         <scene sceneID="Z9I-53-ofS">
             <objects>
-                <viewController storyboardIdentifier="recipe" modalPresentationStyle="fullScreen" hidesBottomBarWhenPushed="YES" id="8rY-kM-RAb" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="recipe" modalPresentationStyle="fullScreen" hidesBottomBarWhenPushed="YES" id="8rY-kM-RAb" customClass="RecipeViewController" customModule="Meals_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Les-qB-Sl9">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -105,14 +105,14 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="rDY-i0-MmI">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="1575"/>
                                                 <subviews>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OAK-Q2-TrP">
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OAK-Q2-TrP" customClass="HeaderView" customModule="Meals_App" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="400"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="400" id="cA5-f4-WZ5"/>
                                                         </constraints>
                                                     </view>
-                                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="l5m-qu-XVg">
+                                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="l5m-qu-XVg" customClass="InfoCollectionView" customModule="Meals_App" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="400" width="414" height="120"/>
                                                         <color key="backgroundColor" red="0.92549019610000005" green="0.90980392160000001" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
@@ -135,7 +135,7 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="bOP-x5-uxI">
+                                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="bOP-x5-uxI" customClass="IngredientsCollectionView" customModule="Meals_App" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="560" width="414" height="170"/>
                                                         <color key="backgroundColor" red="0.92549019610000005" green="0.90980392160000001" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>

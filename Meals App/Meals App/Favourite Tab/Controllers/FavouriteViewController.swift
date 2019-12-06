@@ -2,18 +2,22 @@
 
 import UIKit
 
-class FavouriteViewController: UIViewController{
+class FavouriteViewController: UIViewController, RecipeResultsDelegate{
 
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var RecipesTable: FavouriteTable!
     override func viewDidLoad() {
         super.viewDidLoad()
         segmentedControl.customTitleColor()
-        //RecipesTable.resultsDelegate = self
+        RecipesTable.resultsDelegate = self
     }
   
     @IBAction func segmentChanged(_ sender: Any){
         
+    }
+    func didSelectResult(cell: UITableViewCell) {
+        let view = storyboard?.instantiateViewController(withIdentifier: "recipe") as! RecipeViewController
+        navigationController?.pushViewController(view, animated: true)
     }
     
 }

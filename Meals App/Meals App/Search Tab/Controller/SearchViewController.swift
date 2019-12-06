@@ -80,8 +80,8 @@ extension SearchViewController : RecentDelegate, RecipeResultsDelegate {
     
     func didSelectResult(cell: UITableViewCell) {
     //        //performSegue(withIdentifier: "rec", sender: cell)
-    //        let view = storyboard?.instantiateViewController(withIdentifier: "recipe") as! RecipeViewController
-    //        navigationController?.pushViewController(view, animated: true)
+           let view = storyboard?.instantiateViewController(withIdentifier: "recipe") as! RecipeViewController
+           navigationController?.pushViewController(view, animated: true)
     }
     
 }
