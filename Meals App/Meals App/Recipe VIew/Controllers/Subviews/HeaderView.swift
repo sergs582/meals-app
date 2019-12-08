@@ -11,7 +11,8 @@ import UIKit
 class HeaderView: UIView {
 
     @IBOutlet var contentView: UIView!
-    @IBOutlet weak var img: UIImageView!
+    @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var title: UILabel!
     
     override class func awakeFromNib() {
         super.awakeFromNib()
@@ -20,17 +21,20 @@ class HeaderView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        commonInit()
+      
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        commonInit()
+        
     }
     
-    func commonInit(){
+    func commonInit(imageURL: URL?, title: String){
         Bundle.main.loadNibNamed("HeaderView", owner: self, options: nil)
         contentView.fixInView(self)
+        self.title.text = title
+        
+        
     }
 
 }

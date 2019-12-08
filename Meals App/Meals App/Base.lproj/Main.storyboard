@@ -58,7 +58,7 @@
         <!--Search-->
         <scene sceneID="zY6-VZ-YLV">
             <objects>
-                <viewController id="PMr-wp-YQZ" customClass="SearchViewController" customModule="Fridgy_Recipes" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="PMr-wp-YQZ" customClass="SearchViewController" customModule="Meals_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Q6P-v6-A9j">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -165,7 +165,7 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="400"/>
                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                             </view>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MnN-av-8Hg" customClass="InstructionStepView" customModule="Fridgy_Recipes" customModuleProvider="target">
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MnN-av-8Hg" customClass="InstructionStepView" customModule="Meals_App" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="405" width="414" height="400"/>
                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                             </view>
@@ -204,6 +204,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="6Tu-9s-1sa"/>
                     <connections>
+                        <outlet property="headerView" destination="OAK-Q2-TrP" id="asT-OD-S6k"/>
+                        <outlet property="infoCollection" destination="l5m-qu-XVg" id="idd-Gf-MvI"/>
+                        <outlet property="ingredientsCollection" destination="bOP-x5-uxI" id="Wm8-nx-c9x"/>
                         <outlet property="instructions" destination="FGy-xH-h2B" id="yMF-eL-c8x"/>
                         <outlet property="scrollView" destination="sfR-fN-LCD" id="x60-ZS-DDb"/>
                         <outlet property="topConstraint" destination="hYe-jn-p9p" id="8wd-FI-Frv"/>

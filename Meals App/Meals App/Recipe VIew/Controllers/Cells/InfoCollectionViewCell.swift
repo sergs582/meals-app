@@ -15,11 +15,19 @@ class InfoCollectionViewCell : UICollectionViewCell{
     @IBOutlet weak var image : UIImageView!
     @IBOutlet weak var label : UILabel!
     
+    var title : String!
+    var imageURL : String!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         view.layer.cornerRadius = view.frame.height/2
         image.clipsToBounds = true
         ShadowToView(view)
+    }
+    
+    func commonInit(){
+        label.text = title
+        
     }
     
     func ShadowToView(_ view : UIView){

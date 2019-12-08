@@ -11,7 +11,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HeaderView" customModule="Meals_App" customModuleProvider="target">
             <connections>
                 <outlet property="contentView" destination="C4G-hB-wcd" id="ECU-RB-cje"/>
-                <outlet property="img" destination="0eh-Zp-N6a" id="4Jb-ac-khT"/>
+                <outlet property="image" destination="0eh-Zp-N6a" id="pS7-Lt-X07"/>
+                <outlet property="title" destination="Bp4-or-KP0" id="efn-tY-wE5"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

@@ -19,9 +19,14 @@ class IngredientsCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
     }
+    var name : String!
+    var amountInMetric : String!
+    var amountInUS: String!
     
     func commonInit(){
         setupContent(for: imageFrameView)
+        nameLabel.text = name
+        amountLabel.text = amountInMetric
     }
     
     func setupContent(for view : UIView){

@@ -10,14 +10,22 @@ import UIKit
 
 class RecipeViewController: UIViewController, UIScrollViewDelegate {
 
+    @IBOutlet weak var headerView: HeaderView!
     @IBOutlet weak var instructions: UIStackView!
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     @IBOutlet weak var scrollView: UIScrollView!
-
+    @IBOutlet weak var infoCollection: InfoCollectionView!
+    @IBOutlet weak var ingredientsCollection: IngredientsCollectionView!
+    var viewModel = RecipeViewViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         scrollView.delegate = self
         setupNavigationBar()
+        headerView.commonInit(imageURL: viewModel.headerImageURL, title: viewModel.recipeTitle)
+        infoCollection.commonInit(information: viewModel.information)
+        ingredientsCollection.commonInit(ingredients: viewModel.ingredients)
+        instructions.instructionInit(instructions: viewModel.instructions)
     }
     
     func setupNavigationBar(){
@@ -41,4 +49,16 @@ class RecipeViewController: UIViewController, UIScrollViewDelegate {
         }
     }
 
+}
+
+fileprivate extension UIStackView {
+    
+    func instructionInit(instructions : [Int : String]){
+        for i in 1...instructions.count{
+            let step = InstructionStepView()
+            step.commonInit(index: i, description: instructions[i]!)
+            self.addArrangedSubview(step)
+        }
+    }
+    
 }

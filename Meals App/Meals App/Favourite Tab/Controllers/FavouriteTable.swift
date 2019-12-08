@@ -9,6 +9,7 @@ class FavouriteTable: UITableView, UITableViewDataSource, UITableViewDelegate {
 //    var descriptions : [String]?
     
     weak var resultsDelegate : RecipeResultsDelegate?
+    var viewModel : FavouriteTableViewModel!
     
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)

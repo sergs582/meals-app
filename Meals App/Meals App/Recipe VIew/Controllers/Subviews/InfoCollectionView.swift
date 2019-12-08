@@ -11,12 +11,17 @@ import UIKit
 class InfoCollectionView: UICollectionView {
     
     let InfoCellID = "InfoCollectionViewCell"
+    var information: [RecipeInfo]!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         self.delegate = self
         self.dataSource = self
         self.register(UINib(nibName: InfoCellID, bundle: nil), forCellWithReuseIdentifier: InfoCellID)
+    }
+    
+    func commonInit(information: [RecipeInfo]){
+        self.information = information
     }
 
 }
@@ -25,7 +30,7 @@ class InfoCollectionView: UICollectionView {
 extension InfoCollectionView :  UICollectionViewDataSource, UICollectionViewDelegate{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return information.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -34,6 +39,8 @@ extension InfoCollectionView :  UICollectionViewDataSource, UICollectionViewDele
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InfoCellID, for: indexPath) as! InfoCollectionViewCell
+        cell.title = information[indexPath.row].name
+        cell.imageURL = information[indexPath.row].imageURL
         return cell
     }
     
