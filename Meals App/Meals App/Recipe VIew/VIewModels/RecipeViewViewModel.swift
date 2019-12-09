@@ -41,7 +41,7 @@ class RecipeViewViewModel {
     }
     
     init() {
-        recipe = Recipe(title: "Burger", imageURL: "", cuisine: "American", information: [
+        recipe = Recipe(id: "",title: "Burger", imageURL: "", cuisine: "American", information: [
             RecipeInfo(name: "Gluten free", imageURL: ""),
             RecipeInfo(name: "Shit happens", imageURL: ""),
             RecipeInfo(name: "400cal", imageURL: "")],

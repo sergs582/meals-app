@@ -5,27 +5,47 @@ import UIKit
 class SearchViewController: UIViewController, UISearchBarDelegate {
     
     @IBOutlet weak var recentSearchTable: UITableView!
+    var viewModel = SearchViewViewModel()
     
-    var recentResults = ["First","Second","Third","Fourth"]
+
     let HeaderReuseIdentifier = "RecentSearchHeader"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         CustomizeNavBar()
+      
         setupTable(recentSearchTable)
+        viewModel.recentSearch.bind { [unowned self] (recent) in
+            if recent.count == 0{
+                print("here1")
+                self.recentSearchTable.isHidden = true
+            }
+            print("here")
+            
+            DispatchQueue.main.async {
+                self.recentSearchTable.reloadData()
+            }
+            
+
+        }
+        
+        
+        
     }
 
+    
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         //SegmentedControl value changed
     }
+
+   func CustomizeNavBar(){
+            let searchStoryboard : UIStoryboard? = UIStoryboard(name: "SearchResults", bundle: nil)
+            let resultsView = searchStoryboard?.instantiateViewController(withIdentifier: "searchResultsTable") as! SearchResultsController
+            resultsView.resultsDelegate = self
+            let search = UISearchController(searchResultsController: resultsView)
+            search.searchResultsUpdater = (resultsView as UISearchResultsUpdating)
+            navigationItem.searchController = search
     
-    func CustomizeNavBar(){
-        let searchStoryboard : UIStoryboard? = UIStoryboard(name: "SearchResults", bundle: nil)
-        let resultsView = searchStoryboard?.instantiateViewController(withIdentifier: "searchResultsTable") as! SearchResultsController
-        resultsView.resultsDelegate = self
-        let search = UISearchController(searchResultsController: resultsView)
-        search.searchResultsUpdater = (resultsView as UISearchResultsUpdating)
-        navigationItem.searchController = search
     }
     
     func setupTable(_ table : UITableView){
@@ -45,14 +65,14 @@ extension SearchViewController :  UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
-        cell.textLabel?.text = recentResults[indexPath.row]
+        cell.textLabel?.text = viewModel.recentSearch.value[indexPath.row]
         cell.textLabel?.textColor = .systemGreen
         cell.textLabel?.font = UIFont.systemFont(ofSize: 18)
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return recentResults.count
+        return viewModel.recentSearch.value.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -73,9 +93,7 @@ extension SearchViewController :  UITableViewDataSource, UITableViewDelegate{
 
 extension SearchViewController : RecentDelegate, RecipeResultsDelegate {
     func clearRecent() {
-        recentResults = []
-        recentSearchTable.reloadData()
-        recentSearchTable.isHidden = true
+        viewModel.recentSearch.value = [String]()
     }
     
     func didSelectResult(cell: UITableViewCell) {

@@ -1,5 +1,5 @@
 //
-//  FavouriteViewModel.swift
+//  File.swift
 //  Meals App
 //
 //  Created by Сергей on 08.12.2019.
@@ -8,11 +8,7 @@
 
 import Foundation
 
-class FavouriteTableViewModel {
-    
-    
-    
-    
-    
-    
+enum ResultsType : Int {
+    case favourite
+    case history
 }

@@ -9,7 +9,7 @@ class RecipeCell: UITableViewCell {
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var shortDescription: UILabel!
     
-    var imageName : String?
+    var imageURL : URL?
     var titleText : String?
     var descriptionText : String?
     
@@ -18,7 +18,8 @@ class RecipeCell: UITableViewCell {
     }
     
     func commonInit(){
-
+        title.text = titleText
+        shortDescription.text = descriptionText
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

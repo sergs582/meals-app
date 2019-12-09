@@ -9,6 +9,7 @@
 import Foundation
 
 struct Recipe{
+    var id = ""
     var title = ""
     var imageURL = ""
     var cuisine = ""
