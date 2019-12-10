@@ -10,89 +10,49 @@ import Foundation
 
 class SearchResultsViewViewModel {
     
-       private var recipes = [Recipe]()
+    var recipes : Box<[SearchRecipe]?> = Box(nil)
        
        func recipesCount() -> Int{
-           return recipes.count
+        return recipes.value?.count ?? 0
        }
     
        var searchQuery : Box<String?> = Box(nil)
-       
+    
+    
        func imageURL(at index : Int) -> URL?{
-           return URL(string: recipes[index].imageURL)
+        return URL(string: "https://spoonacular.com/recipeImages/\(recipes.value?[index].image ?? "")")
        }
        
        func recipeTitle(at index : Int) -> String{
-           return recipes[index].title
+        return recipes.value?[index].title ?? ""
        }
        
        func recipeCuisine(at index : Int) -> String{
-           return recipes[index].cuisine
+           return "American"
        }
        
        var recipeViewModel = RecipeViewViewModel()
+       var searchRecipeManager = APIRecipeManager(apiKey: "b9b785cbea634d2c82b2b9855cf33756")
+    
     
        func fetchResults(query: String?){
         guard let query = query else { return }
-        recipes = [Recipe(id: "",title: query, imageURL: "", cuisine: "American", information: [
-            RecipeInfo(name: "Gluten free", imageURL: ""),
-            RecipeInfo(name: "Shit happens", imageURL: ""),
-            RecipeInfo(name: "400cal", imageURL: "")],
-        ingredients: [
-            Ingredient(name: "banana", imageURL: "", amountInMetric: "5kg", amountInUS: "1.3lb"),
-            Ingredient(name: "milk", imageURL: "", amountInMetric: "1l", amountInUS: "2oz"),
-            Ingredient(name: "meat", imageURL: "", amountInMetric: "2kg", amountInUS: "0.8lb")],
-        instruction: [1 : "Cook sausage in a large nonstick skillet over medium-high heat, stirring until sausage crumbles and is              no longer pink.",
-                      2 : "Remove from pan; drain well, pressing between paper towels.",
-                      3 : "Unroll dough into a rectangular shape on a lightly greased baking sheet; sprinkle evenly with sausage and cheese. Beginning with 1 long side, roll up, jelly-roll fashion. Turn, seam side down, on baking sheet, and pinch ends to secure filling inside."]   ),
-        Recipe(id: "",title: query, imageURL: "", cuisine: "American", information: [
-            RecipeInfo(name: "Gluten free", imageURL: ""),
-            RecipeInfo(name: "Shit happens", imageURL: ""),
-            RecipeInfo(name: "400cal", imageURL: "")],
-        ingredients: [
-            Ingredient(name: "banana", imageURL: "", amountInMetric: "5kg", amountInUS: "1.3lb"),
-            Ingredient(name: "milk", imageURL: "", amountInMetric: "1l", amountInUS: "2oz"),
-            Ingredient(name: "meat", imageURL: "", amountInMetric: "2kg", amountInUS: "0.8lb")],
-        instruction: [1 : "Cook sausage in a large nonstick skillet over medium-high heat, stirring until sausage crumbles and is              no longer pink.",
-                      2 : "Remove from pan; drain well, pressing between paper towels.",
-                      3 : "Unroll dough into a rectangular shape on a lightly greased baking sheet; sprinkle evenly with sausage and cheese. Beginning with 1 long side, roll up, jelly-roll fashion. Turn, seam side down, on baking sheet, and pinch ends to secure filling inside."]   )]
+        searchRecipeManager.fetchRecipeWith(recipeName: query, number: 10) {  (result) in
+            switch result {
+            case .Success(let recipes):
+                self.recipes.value = recipes.results
+                print(recipes.results)
+            case .Failure(let error):
+                print(error)
+            }
+        }
+        
+        
         
     }
        
        init() {
-           recipes = [Recipe(id: "",title: "Burger", imageURL: "", cuisine: "American", information: [
-               RecipeInfo(name: "Gluten free", imageURL: ""),
-               RecipeInfo(name: "Shit happens", imageURL: ""),
-               RecipeInfo(name: "400cal", imageURL: "")],
-           ingredients: [
-               Ingredient(name: "banana", imageURL: "", amountInMetric: "5kg", amountInUS: "1.3lb"),
-               Ingredient(name: "milk", imageURL: "", amountInMetric: "1l", amountInUS: "2oz"),
-               Ingredient(name: "meat", imageURL: "", amountInMetric: "2kg", amountInUS: "0.8lb")],
-           instruction: [1 : "Cook sausage in a large nonstick skillet over medium-high heat, stirring until sausage crumbles and is              no longer pink.",
-                         2 : "Remove from pan; drain well, pressing between paper towels.",
-                         3 : "Unroll dough into a rectangular shape on a lightly greased baking sheet; sprinkle evenly with sausage and cheese. Beginning with 1 long side, roll up, jelly-roll fashion. Turn, seam side down, on baking sheet, and pinch ends to secure filling inside."]   ),
-           Recipe(id: "",title: "Burger", imageURL: "", cuisine: "American", information: [
-               RecipeInfo(name: "Gluten free", imageURL: ""),
-               RecipeInfo(name: "Shit happens", imageURL: ""),
-               RecipeInfo(name: "400cal", imageURL: "")],
-           ingredients: [
-               Ingredient(name: "banana", imageURL: "", amountInMetric: "5kg", amountInUS: "1.3lb"),
-               Ingredient(name: "milk", imageURL: "", amountInMetric: "1l", amountInUS: "2oz"),
-               Ingredient(name: "meat", imageURL: "", amountInMetric: "2kg", amountInUS: "0.8lb")],
-           instruction: [1 : "Cook sausage in a large nonstick skillet over medium-high heat, stirring until sausage crumbles and is              no longer pink.",
-                         2 : "Remove from pan; drain well, pressing between paper towels.",
-                         3 : "Unroll dough into a rectangular shape on a lightly greased baking sheet; sprinkle evenly with sausage and cheese. Beginning with 1 long side, roll up, jelly-roll fashion. Turn, seam side down, on baking sheet, and pinch ends to secure filling inside."]   ),
-           Recipe(id: "",title: "Burger", imageURL: "", cuisine: "American", information: [
-               RecipeInfo(name: "Gluten free", imageURL: ""),
-               RecipeInfo(name: "Shit happens", imageURL: ""),
-               RecipeInfo(name: "400cal", imageURL: "")],
-           ingredients: [
-               Ingredient(name: "banana", imageURL: "", amountInMetric: "5kg", amountInUS: "1.3lb"),
-               Ingredient(name: "milk", imageURL: "", amountInMetric: "1l", amountInUS: "2oz"),
-               Ingredient(name: "meat", imageURL: "", amountInMetric: "2kg", amountInUS: "0.8lb")],
-           instruction: [1 : "Cook sausage in a large nonstick skillet over medium-high heat, stirring until sausage crumbles and is              no longer pink.",
-                         2 : "Remove from pan; drain well, pressing between paper towels.",
-                         3 : "Unroll dough into a rectangular shape on a lightly greased baking sheet; sprinkle evenly with sausage and cheese. Beginning with 1 long side, roll up, jelly-roll fashion. Turn, seam side down, on baking sheet, and pinch ends to secure filling inside."]   )]
+           
        }
     
 }
