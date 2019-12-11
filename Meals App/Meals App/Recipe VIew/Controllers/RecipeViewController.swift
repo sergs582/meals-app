@@ -22,10 +22,26 @@ class RecipeViewController: UIViewController, UIScrollViewDelegate {
         super.viewDidLoad()
         scrollView.delegate = self
         setupNavigationBar()
+        commonInit()
+        
+        viewModel.recipe.bind { [unowned self] (recipe) in
+            DispatchQueue.main.async {
+               
+                self.commonInit()
+            }
+            
+        }
+    }
+    
+    func commonInit(){
+        
         headerView.commonInit(imageURL: viewModel.headerImageURL, title: viewModel.recipeTitle)
-        infoCollection.commonInit(information: viewModel.information)
+        infoCollection.commonInit(information: viewModel.information!)
         ingredientsCollection.commonInit(ingredients: viewModel.ingredients)
-        instructions.instructionInit(instructions: viewModel.instructions)
+        guard viewModel.instructions.count == 0 else{
+        instructions.instructionInit(steps: viewModel.instructions[0].steps)
+        return
+    }
     }
     
     func setupNavigationBar(){
@@ -53,11 +69,14 @@ class RecipeViewController: UIViewController, UIScrollViewDelegate {
 
 fileprivate extension UIStackView {
     
-    func instructionInit(instructions : [Int : String]){
-        for i in 1...instructions.count{
+    func instructionInit(steps : [Step]){
+        print(steps.count)
+        guard steps.count != 0 else { return }
+        for i in 0..<steps.count{
             let step = InstructionStepView()
-            step.commonInit(index: i, description: instructions[i]!)
+            step.commonInit(index: steps[i].number, description: steps[i].step)
             self.addArrangedSubview(step)
+            self.translatesAutoresizingMaskIntoConstraints = false
         }
     }
     

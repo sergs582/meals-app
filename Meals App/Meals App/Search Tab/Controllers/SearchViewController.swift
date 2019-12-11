@@ -92,15 +92,18 @@ extension SearchViewController :  UITableViewDataSource, UITableViewDelegate{
 }
 
 extension SearchViewController : RecentDelegate, RecipeResultsDelegate {
+ 
+    
     func clearRecent() {
         viewModel.recentSearch.value = [String]()
     }
     
-    func didSelectResult(cell: UITableViewCell) {
+    func didSelectResult(recipe: Recipe) {
     //        //performSegue(withIdentifier: "rec", sender: cell)
            let view = storyboard?.instantiateViewController(withIdentifier: "recipe") as! RecipeViewController
+        view.viewModel = RecipeViewViewModel(withRecipe: recipe)
            navigationController?.pushViewController(view, animated: true)
     }
     
 }
-
+ 

@@ -23,6 +23,9 @@ class SearchResultsViewViewModel {
         return URL(string: "https://spoonacular.com/recipeImages/\(recipes.value?[index].image ?? "")")
        }
        
+    func recipe(at index: Int) -> Recipe{
+        return recipes.value?[index].toRecipe() ?? Recipe()
+    }
        func recipeTitle(at index : Int) -> String{
         return recipes.value?[index].title ?? ""
        }
@@ -31,8 +34,8 @@ class SearchResultsViewViewModel {
            return "American"
        }
        
-       var recipeViewModel = RecipeViewViewModel()
-       var searchRecipeManager = APIRecipeManager(apiKey: "b9b785cbea634d2c82b2b9855cf33756")
+       
+       var searchRecipeManager = APISearchRecipeManager(apiKey: "b9b785cbea634d2c82b2b9855cf33756")
     
     
        func fetchResults(query: String?){

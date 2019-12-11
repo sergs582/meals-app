@@ -22,6 +22,7 @@ class InfoCollectionView: UICollectionView {
     
     func commonInit(information: [RecipeInfo]){
         self.information = information
+        self.reloadData()
     }
 
 }
@@ -39,8 +40,9 @@ extension InfoCollectionView :  UICollectionViewDataSource, UICollectionViewDele
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InfoCellID, for: indexPath) as! InfoCollectionViewCell
-        cell.title = information[indexPath.row].name
-        cell.imageURL = information[indexPath.row].imageURL
+        cell.title = information[indexPath.row].title
+        cell.imageName = information[indexPath.row].imageName
+        cell.commonInit()
         return cell
     }
     

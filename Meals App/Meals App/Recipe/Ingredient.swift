@@ -8,9 +8,21 @@
 
 import Foundation
 
-struct Ingredient{
-    var name = ""
-    var imageURL = ""
-    var amountInMetric = ""
-    var amountInUS = ""
+struct Ingredient : Codable{
+    var name : String
+    var image : String
+    var measures : Measures
+    
+    func imageURL() -> URL {
+        return URL(string: "https://spoonacular.com/cdn/ingredients_100x100/\(image)")!
+    }
+}
+
+struct Measures : Codable {
+    var metric : MetricMeasure
+}
+
+struct MetricMeasure : Codable {
+    var amount : Double
+    var unitShort : String
 }

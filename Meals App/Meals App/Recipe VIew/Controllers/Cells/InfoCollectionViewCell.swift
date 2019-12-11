@@ -16,7 +16,7 @@ class InfoCollectionViewCell : UICollectionViewCell{
     @IBOutlet weak var label : UILabel!
     
     var title : String!
-    var imageURL : String!
+    var imageName : String!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,7 +27,7 @@ class InfoCollectionViewCell : UICollectionViewCell{
     
     func commonInit(){
         label.text = title
-        
+                image.image = UIImage(named: imageName)
     }
     
     func ShadowToView(_ view : UIView){

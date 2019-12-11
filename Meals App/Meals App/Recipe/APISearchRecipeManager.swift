@@ -2,13 +2,14 @@
 //  APIRecipeManager.swift
 //  Meals App
 //
-//  Created by Сергей on 10.12.2019.
+//  Created by Сергей on 09.12.2019.
 //  Copyright © 2019 Сергей. All rights reserved.
 //
 
 import Foundation
 
-final class APIRecipeManager: APIManager {
+final class APISearchRecipeManager : APIManager {
+   
     
     let sessionConfiguration: URLSessionConfiguration
     lazy var session: URLSession = {
@@ -26,14 +27,13 @@ final class APIRecipeManager: APIManager {
         self.init(sessionConfiguration: URLSessionConfiguration.default, apiKey: apiKey)
     }
     
-    func fetchRecipeWith(recipeId: Int, completion: @escaping (APIResult<RecipeResponse>) -> Void) {
-        let baseURL = "https://api.spoonacular.com/recipes/"
-        let finalURL = URLConfigurator(baseURL: baseURL,  apiKey: apiKey, recipeId: recipeId).buildRecipeURL()
-       
+    func fetchRecipeWith(recipeName: String, number: Int, completion: @escaping (APIResult<SearchRecipesResponse>) -> Void) {
+        let baseURL = "https://api.spoonacular.com/recipes/search?"
+        let finalURL = URLConfigurator(baseURL: baseURL, query: recipeName, number: number, apiKey: apiKey).buildSearchURL()
         let request = URLRequest(url: finalURL!)
-        fetch(request: request, decode: { (data) -> RecipeResponse? in
+        fetch(request: request, decode: { (data) -> SearchRecipesResponse? in
             do{
-                let recipes = try JSONDecoder().decode(RecipeResponse.self, from: data)
+                let recipes = try JSONDecoder().decode(SearchRecipesResponse.self, from: data)
                 return recipes
             }catch let error {
                 print(error)
@@ -41,6 +41,5 @@ final class APIRecipeManager: APIManager {
             }
         }, completion: completion)
     }
-    
     
 }

@@ -8,12 +8,16 @@
 
 import Foundation
 
-struct RecipesResponse : Codable {
+struct SearchRecipesResponse : Codable {
     var results : [SearchRecipe]
 }
 
 struct SearchRecipe : Codable{
-    var id = 0
-    var title = ""
-    var image = ""
+    var id : Int
+    var title : String
+    var image : String
+    
+    func toRecipe() -> Recipe{
+        return Recipe(id: id, title: title, imageURL: image)
+    }
 }

@@ -73,7 +73,8 @@ class SearchResultsController: UITableViewController, UISearchBarDelegate, UISea
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        resultsDelegate?.didSelectResult(cell: tableView.cellForRow(at: indexPath)!)
+        let recipe = viewModel.recipe(at: indexPath.row)
+        resultsDelegate?.didSelectResult(recipe: recipe )
     }
 
 }

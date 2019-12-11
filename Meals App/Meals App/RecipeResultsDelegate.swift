@@ -11,5 +11,5 @@ import UIKit
 
 //To be implemented by Tables with Recipe Results (ex.: FavouriteVC, SearchVC)
 protocol RecipeResultsDelegate: class {
-    func didSelectResult(cell : UITableViewCell)
+    func didSelectResult(recipe: Recipe)
 }

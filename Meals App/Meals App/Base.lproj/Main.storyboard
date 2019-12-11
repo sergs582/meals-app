@@ -99,10 +99,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k6g-rc-FbG">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1575"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1170"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="rDY-i0-MmI">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="1575"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="1170"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OAK-Q2-TrP" customClass="HeaderView" customModule="Meals_App" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="400"/>
@@ -157,18 +157,8 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="FGy-xH-h2B">
-                                                        <rect key="frame" x="0.0" y="770" width="414" height="805"/>
-                                                        <subviews>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3P9-GZ-Q1L">
-                                                                <rect key="frame" x="0.0" y="0.0" width="414" height="400"/>
-                                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                                            </view>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MnN-av-8Hg" customClass="InstructionStepView" customModule="Meals_App" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="405" width="414" height="400"/>
-                                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                                            </view>
-                                                        </subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="FGy-xH-h2B">
+                                                        <rect key="frame" x="0.0" y="770" width="414" height="400"/>
                                                     </stackView>
                                                 </subviews>
                                             </stackView>

@@ -15,6 +15,8 @@ class IngredientsCollectionView: UICollectionView {
     
     func commonInit(ingredients: [Ingredient]){
         self.ingredients = ingredients
+        print(ingredients)
+        self.reloadData()
     }
 }
 
@@ -26,8 +28,8 @@ extension IngredientsCollectionView : UICollectionViewDelegate, UICollectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = self.dequeueReusableCell(withReuseIdentifier: IngredientCellID, for: indexPath) as! IngredientsCollectionViewCell
         cell.name = ingredients[indexPath.row].name
-        cell.amountInMetric = ingredients[indexPath.row].amountInMetric
-        cell.amountInUS = ingredients[indexPath.row].amountInUS
+        cell.amountInMetric = "\(Int(ingredients[indexPath.row].measures.metric.amount)) \(ingredients[indexPath.row].measures.metric.unitShort)"
+        cell.imageURL = ingredients[indexPath.row].imageURL()
         cell.commonInit()
         return cell
     }

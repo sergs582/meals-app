@@ -14,10 +14,12 @@ class InstructionStepView: UIView {
     @IBOutlet weak var stepDescription: UITextView!
     @IBOutlet weak var index: UILabel!
     
+  
     override init(frame: CGRect) {
         super.init(frame: frame)
         
     }
+    
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -25,17 +27,20 @@ class InstructionStepView: UIView {
     }
     override func awakeFromNib() {
         super.awakeFromNib()
-      
     }
     
     func commonInit(index : Int, description : String){
         Bundle.main.loadNibNamed("InstructionStepView", owner: self, options: nil)
+        
+      self.index.text = "\(index)"
+      self.stepDescription.text = description
+        
         contentView.frame = self.bounds
+        print(self.bounds)
         self.index.layer.masksToBounds = true
         self.index.layer.cornerRadius = self.index.frame.height/2
         addSubview(contentView)
-        self.index.text = "\(index)"
-        self.stepDescription.text = description
+        
     }
 
 }

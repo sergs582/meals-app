@@ -14,6 +14,8 @@ class HeaderView: UIView {
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var title: UILabel!
     
+    var imageURL : URL?
+    
     override class func awakeFromNib() {
         super.awakeFromNib()
         
@@ -29,12 +31,26 @@ class HeaderView: UIView {
         
     }
     
+    func loadImage(){
+        if let imageURL = imageURL{
+        DispatchQueue.global().async {
+          if let data = try? Data(contentsOf: imageURL),
+              let image = UIImage(data: data){
+              DispatchQueue.main.async {
+                self.image.image = image
+              }
+          }
+          }
+          }
+    }
+    
     func commonInit(imageURL: URL?, title: String){
         Bundle.main.loadNibNamed("HeaderView", owner: self, options: nil)
+        self.imageURL = imageURL
         contentView.fixInView(self)
         self.title.text = title
-        
-        
+        print("TITLE \(title)")
+        loadImage()
     }
 
 }
