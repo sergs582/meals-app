@@ -24,10 +24,9 @@ struct RecipeResponse: Decodable {
         recipe.id = self.id
         recipe.title = self.title
         recipe.imageURL = image
-        
         var recipeInformation = [RecipeInfo]()
         let isVegetarianTitle = vegetarian ? "Vegetarian" : "Non-Vegetarian"
-        recipeInformation.append(RecipeInfo(title: isVegetarianTitle, imageName: "vegitarian"))
+        recipeInformation.append(RecipeInfo(title: isVegetarianTitle, imageName: "vegetarian"))
         recipeInformation.append(RecipeInfo(title: "\(readyInMinutes)", imageName: "time"))
         recipeInformation.append(RecipeInfo(title: "\(pricePerServing)", imageName: "price"))
         recipeInformation.append(RecipeInfo(title: "\(cuisines?.first ?? "International")", imageName: "cuisine"))
@@ -47,7 +46,9 @@ struct Recipe{
     var title = ""
     var imageURL = ""
     var cuisine: String?
+    var image: Data?
     var information = [RecipeInfo]()
     var ingredients = [Ingredient]()
+    var savedIngredients = [SavedIngredient]()
     var instruction = [RecipeInstruction]()
 }

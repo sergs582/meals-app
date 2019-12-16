@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import CoreData
 struct RecipeInstruction : Codable {
     var steps : [Step]
     
@@ -16,4 +16,12 @@ struct RecipeInstruction : Codable {
 struct Step : Codable {
     var number : Int
     var step : String
+    
+    func toInstructionEntity(context: NSManagedObjectContext ) -> InstructionEntity {
+        let entity = InstructionEntity(context: context)
+        entity.number = Int16(self.number)
+        entity.step = self.step
+        return entity
+    }
+    
 }

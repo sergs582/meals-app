@@ -31,10 +31,8 @@ class InstructionStepView: UIView {
     
     func commonInit(index : Int, description : String){
         Bundle.main.loadNibNamed("InstructionStepView", owner: self, options: nil)
-        
-      self.index.text = "\(index)"
-      self.stepDescription.text = description
-        
+        self.index.text = "\(index)"
+        self.stepDescription.text = description
         contentView.frame = self.bounds
         print(self.bounds)
         self.index.layer.masksToBounds = true

@@ -27,7 +27,19 @@ class InfoCollectionViewCell : UICollectionViewCell{
     
     func commonInit(){
         label.text = title
-                image.image = UIImage(named: imageName)
+        image.image = UIImage(named: imageName)
+        switch imageName {
+        case "vegetarian":
+            view.backgroundColor = .green
+        case "cuisine":
+            view.backgroundColor = .cyan
+        case "price":
+            view.backgroundColor = .orange
+        case "time":
+            view.backgroundColor = .systemPink
+        default:
+             view.backgroundColor = .systemPink
+        }
     }
     
     func ShadowToView(_ view : UIView){
@@ -37,3 +49,4 @@ class InfoCollectionViewCell : UICollectionViewCell{
         view.layer.shadowRadius = 2
     }
 }
+

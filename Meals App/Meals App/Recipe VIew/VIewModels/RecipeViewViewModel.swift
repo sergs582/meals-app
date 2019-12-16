@@ -10,8 +10,13 @@ import Foundation
 
 class RecipeViewViewModel {
     
-     var recipe : Box<Recipe?> = Box(nil)
+    var recipe : Box<Recipe?> = Box(nil)
     private var apiKey = "b9b785cbea634d2c82b2b9855cf33756"
+    var recipeModel = RecipeModel()
+    
+    func addToFavourite(){
+        recipeModel.saveRecipe(recipe: recipe.value!)
+    }
     
     var recipeTitle: String {
         return recipe.value?.title ?? "Title"
@@ -53,18 +58,19 @@ class RecipeViewViewModel {
     init(){
         
     }
-    
     init(withRecipe recipe: Recipe) {
-        
         fetchResult(recipeId: recipe.id)
     }
+    init(savedRecipe recipe: Recipe) {
+        self.recipe.value = recipe
+    }
+    
     
     func fetchResult(recipeId: Int) {
         recipeManager.fetchRecipeWith(recipeId: recipeId) { (result) in
             switch result {
             case .Success(let recipe):
                 self.recipe.value = recipe.toRecipe()
-                print(self.recipe)
             case .Failure(let error):
                 print(error)
             }

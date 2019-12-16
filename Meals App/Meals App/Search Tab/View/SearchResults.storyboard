@@ -3,13 +3,14 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Search Results Controller-->
         <scene sceneID="0Px-Xt-lFV">
             <objects>
-                <tableViewController storyboardIdentifier="searchResultsTable" id="mfY-Qb-8f5" customClass="SearchResultsController" customModule="Fridgy_Recipes" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="searchResultsTable" id="mfY-Qb-8f5" customClass="SearchResultsController" customModule="Meals_App" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="d40-tV-IV1">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -33,6 +34,124 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xqj-zz-KpZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="61" y="144"/>
+        </scene>
+        <!--Recipe View Controller-->
+        <scene sceneID="xrt-1T-woA">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hb9-Yg-llh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <viewController storyboardIdentifier="recipe" modalPresentationStyle="fullScreen" hidesBottomBarWhenPushed="YES" id="EgX-y3-GKw" customClass="RecipeViewController" customModule="Meals_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="aLC-t8-F42">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="doI-ab-230">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uin-4B-lfY">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1170"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="sPr-Kt-Mlf">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="1170"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QvY-Qi-kTL" customClass="HeaderView" customModule="Meals_App" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="400"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="400" id="D1e-g7-Svc"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ZEm-nb-6K7" customClass="InfoCollectionView" customModule="Meals_App" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="400" width="414" height="120"/>
+                                                        <color key="backgroundColor" red="0.92549019610000005" green="0.90980392160000001" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="120" id="BDU-nA-pbl"/>
+                                                        </constraints>
+                                                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="rxn-D1-M3q">
+                                                            <size key="itemSize" width="50" height="50"/>
+                                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                        </collectionViewFlowLayout>
+                                                        <cells/>
+                                                    </collectionView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="   Ingredients" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hca-BV-uKr">
+                                                        <rect key="frame" x="0.0" y="520" width="414" height="40"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="40" id="ZyT-tG-jOl"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="22"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="o28-Sf-EPa" customClass="IngredientsCollectionView" customModule="Meals_App" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="560" width="414" height="170"/>
+                                                        <color key="backgroundColor" red="0.92549019610000005" green="0.90980392160000001" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="170" id="Hju-4T-vtK"/>
+                                                        </constraints>
+                                                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="npp-OF-lYD">
+                                                            <size key="itemSize" width="50" height="50"/>
+                                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                        </collectionViewFlowLayout>
+                                                        <cells/>
+                                                    </collectionView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="   Instruction" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Gl-db-8Qm">
+                                                        <rect key="frame" x="0.0" y="730" width="414" height="40"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="40" id="y6A-Dg-BTq"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="22"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="udo-KB-sdY">
+                                                        <rect key="frame" x="0.0" y="770" width="414" height="400"/>
+                                                    </stackView>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="sPr-Kt-Mlf" secondAttribute="bottom" id="6fm-ZJ-5Qe"/>
+                                            <constraint firstAttribute="trailing" secondItem="sPr-Kt-Mlf" secondAttribute="trailing" id="6wg-N0-rot"/>
+                                            <constraint firstItem="sPr-Kt-Mlf" firstAttribute="leading" secondItem="Uin-4B-lfY" secondAttribute="leading" id="8U2-Kz-73U"/>
+                                            <constraint firstItem="sPr-Kt-Mlf" firstAttribute="top" secondItem="Uin-4B-lfY" secondAttribute="top" id="LeZ-S3-OCM"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="Uin-4B-lfY" firstAttribute="height" secondItem="doI-ab-230" secondAttribute="height" priority="250" id="1sV-tm-a6h"/>
+                                    <constraint firstAttribute="trailing" secondItem="Uin-4B-lfY" secondAttribute="trailing" id="M18-KM-kfk"/>
+                                    <constraint firstAttribute="bottom" secondItem="Uin-4B-lfY" secondAttribute="bottom" id="QjB-lH-pWS"/>
+                                    <constraint firstItem="Uin-4B-lfY" firstAttribute="width" secondItem="doI-ab-230" secondAttribute="width" id="Tmy-Nu-y9Y"/>
+                                    <constraint firstItem="Uin-4B-lfY" firstAttribute="top" secondItem="doI-ab-230" secondAttribute="top" id="ifb-fO-fOC"/>
+                                    <constraint firstItem="Uin-4B-lfY" firstAttribute="leading" secondItem="doI-ab-230" secondAttribute="leading" id="t3w-mr-IcF"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="doI-ab-230" secondAttribute="bottom" id="Est-Pd-O0J"/>
+                            <constraint firstItem="doI-ab-230" firstAttribute="top" secondItem="aLC-t8-F42" secondAttribute="top" id="IWq-G8-Axz"/>
+                            <constraint firstItem="doI-ab-230" firstAttribute="trailing" secondItem="xkI-kg-9It" secondAttribute="trailing" id="Q08-He-T7x"/>
+                            <constraint firstItem="doI-ab-230" firstAttribute="leading" secondItem="xkI-kg-9It" secondAttribute="leading" id="c9B-zE-dWK"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="xkI-kg-9It"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="dio-Yq-ROC"/>
+                    <connections>
+                        <outlet property="headerView" destination="QvY-Qi-kTL" id="W11-PY-QDk"/>
+                        <outlet property="infoCollection" destination="ZEm-nb-6K7" id="Ohd-98-V2e"/>
+                        <outlet property="ingredientsCollection" destination="o28-Sf-EPa" id="HFL-pb-7Ge"/>
+                        <outlet property="instructions" destination="udo-KB-sdY" id="ILc-YP-Dgx"/>
+                        <outlet property="scrollView" destination="doI-ab-230" id="ghX-zL-Wlo"/>
+                        <outlet property="topConstraint" destination="IWq-G8-Axz" id="L59-Zx-R31"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="514" y="-1249"/>
         </scene>
     </scenes>
 </document>

@@ -22,27 +22,32 @@ class IngredientsCollectionViewCell: UICollectionViewCell {
     var name : String!
     var amountInMetric : String!
     var imageURL : URL?
-  
+    var imageData : Data?
+    
     func commonInit(){
         setupContent(for: imageFrameView)
         nameLabel.text = name
         amountLabel.text = amountInMetric
-       
-        loadImage()
+        if imageData == nil {
+            loadImage()
+        }else{
+            picture.image = UIImage(data: imageData!)
+        }
+        
     }
     
     func loadImage(){
-           if let imageURL = imageURL{
-           DispatchQueue.global().async {
-             if let data = try? Data(contentsOf: imageURL),
-                 let image = UIImage(data: data){
-                 DispatchQueue.main.async {
-                   self.picture.image = image
-                 }
-             }
-             }
-             }
-       }
+        if let imageURL = imageURL{
+            DispatchQueue.global().async {
+                if let data = try? Data(contentsOf: imageURL),
+                    let image = UIImage(data: data){
+                    DispatchQueue.main.async {
+                        self.picture.image = image
+                    }
+                }
+            }
+        }
+    }
     
     func setupContent(for view : UIView){
         width.constant = self.frame.width

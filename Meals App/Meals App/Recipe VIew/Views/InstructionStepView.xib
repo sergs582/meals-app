@@ -3,6 +3,7 @@
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -36,7 +37,6 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
-                            <color key="backgroundColor" red="0.92549019610000005" green="0.90980392160000001" blue="0.90980392160000001" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="width" relation="lessThanOrEqual" constant="60" id="Geo-fh-1pr"/>
                                 <constraint firstItem="vNK-PO-NL0" firstAttribute="top" secondItem="FHH-d6-U8R" secondAttribute="top" constant="10" id="JJq-db-30f"/>
@@ -45,7 +45,6 @@
                         </view>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hu5-Fn-aaO">
                             <rect key="frame" x="60" y="0.0" width="354" height="244"/>
-                            <color key="backgroundColor" red="0.92549019610000005" green="0.90980392160000001" blue="0.90980392160000001" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                             <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -56,7 +55,7 @@
                     </constraints>
                 </stackView>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" name="RecipeViewComponentColor"/>
             <constraints>
                 <constraint firstItem="gBM-Ir-Ceo" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="8pT-bJ-2jX"/>
                 <constraint firstItem="gBM-Ir-Ceo" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="8qc-OY-pph"/>
@@ -67,4 +66,9 @@
             <point key="canvasLocation" x="-28.985507246376812" y="-152.67857142857142"/>
         </view>
     </objects>
+    <resources>
+        <namedColor name="RecipeViewComponentColor">
+            <color red="0.92549019607843142" green="0.90980392156862744" blue="0.90980392156862744" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
 </document>

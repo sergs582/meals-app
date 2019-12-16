@@ -12,11 +12,8 @@ class RecipeCell: UITableViewCell {
     var imageURL : URL?
     var titleText : String?
     var descriptionText : String?
-    var imageData : UIImage? {
-        didSet{
-            imageForCell.image = imageData
-        }
-    }
+    var imageData : Data?
+  
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -35,11 +32,11 @@ class RecipeCell: UITableViewCell {
             
             self.imageForCell.image = image
             }
-        
-
         }
         
         }
+        }else if let data = imageData{
+            imageForCell.image = UIImage(data: data)
         }
     }
 

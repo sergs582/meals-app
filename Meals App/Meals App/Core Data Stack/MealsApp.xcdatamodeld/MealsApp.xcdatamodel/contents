@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19B88" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="IngredientEntity" representedClassName="IngredientEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="amount" optional="YES" attributeType="String"/>
+        <attribute name="image" optional="YES" attributeType="Binary"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="recipe" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecipeEntity" inverseName="ingredients" inverseEntity="RecipeEntity"/>
+    </entity>
+    <entity name="InstructionEntity" representedClassName="InstructionEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="number" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="step" optional="YES" attributeType="String"/>
+        <relationship name="recipe" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecipeEntity" inverseName="instructions" inverseEntity="RecipeEntity"/>
+    </entity>
+    <entity name="RecipeEntity" representedClassName="RecipeEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="cuisine" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="image" optional="YES" attributeType="Binary"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="IngredientEntity" inverseName="recipe" inverseEntity="IngredientEntity"/>
+        <relationship name="instructions" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="InstructionEntity" inverseName="recipe" inverseEntity="InstructionEntity"/>
+        <relationship name="recipeInfo" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="RecipeInfoEntity" inverseName="recipe" inverseEntity="RecipeInfoEntity"/>
+    </entity>
+    <entity name="RecipeInfoEntity" representedClassName="RecipeInfoEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="imageName" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="recipe" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecipeEntity" inverseName="recipeInfo" inverseEntity="RecipeEntity"/>
+    </entity>
+    <elements>
+        <element name="IngredientEntity" positionX="-135" positionY="81" width="128" height="103"/>
+        <element name="InstructionEntity" positionX="-390.78515625" positionY="142.44921875" width="128" height="88"/>
+        <element name="RecipeEntity" positionX="-399.66796875" positionY="-141.7421875" width="128" height="163"/>
+        <element name="RecipeInfoEntity" positionX="-688.09765625" positionY="91.42578125" width="128" height="88"/>
+    </elements>
+</model>

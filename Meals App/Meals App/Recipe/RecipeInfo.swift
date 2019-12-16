@@ -7,8 +7,15 @@
 //
 
 import Foundation
-
+import CoreData
 struct RecipeInfo {
     var title : String
     var imageName : String
+    
+    func toRecipeInfoEntity(context: NSManagedObjectContext) -> RecipeInfoEntity {
+        let entity = RecipeInfoEntity(context: context)
+        entity.imageName = self.imageName
+        entity.title = self.title
+        return entity
+    }
 }

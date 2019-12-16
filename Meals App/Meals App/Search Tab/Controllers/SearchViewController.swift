@@ -10,6 +10,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
 
     let HeaderReuseIdentifier = "RecentSearchHeader"
     
+  
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         CustomizeNavBar()
@@ -33,10 +35,6 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         
     }
 
-    
-    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        //SegmentedControl value changed
-    }
 
    func CustomizeNavBar(){
             let searchStoryboard : UIStoryboard? = UIStoryboard(name: "SearchResults", bundle: nil)
@@ -44,6 +42,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
             resultsView.resultsDelegate = self
             let search = UISearchController(searchResultsController: resultsView)
             search.searchResultsUpdater = (resultsView as UISearchResultsUpdating)
+   
             navigationItem.searchController = search
     
     }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RecipeViewController: UIViewController, UIScrollViewDelegate {
+class RecipeViewController: UIViewController, UIScrollViewDelegate, HeaderViewDelegate {
 
     @IBOutlet weak var headerView: HeaderView!
     @IBOutlet weak var instructions: UIStackView!
@@ -23,26 +23,43 @@ class RecipeViewController: UIViewController, UIScrollViewDelegate {
         scrollView.delegate = self
         setupNavigationBar()
         commonInit()
-        
-        viewModel.recipe.bind { [unowned self] (recipe) in
-            DispatchQueue.main.async {
-               
-                self.commonInit()
+        headerView.delegate = self
+        guard viewModel.recipe.value?.image != nil else {
+            viewModel.recipe.bind {  (recipe) in
+                DispatchQueue.main.async {
+                    self.commonInit()
+                }
             }
-            
+            return
         }
+        
+    
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+        self.navigationController?.navigationBar.shadowImage = nil
     }
     
     func commonInit(){
         
-        headerView.commonInit(imageURL: viewModel.headerImageURL, title: viewModel.recipeTitle)
+        headerView.commonInit(imageURL: viewModel.headerImageURL, image: viewModel.recipe.value?.image, title: viewModel.recipeTitle)
         infoCollection.commonInit(information: viewModel.information!)
-        ingredientsCollection.commonInit(ingredients: viewModel.ingredients)
+        ingredientsCollection.commonInit(ingredients: viewModel.ingredients, savedIngredients: viewModel.recipe.value?.savedIngredients)
+        ingredientsCollection.reloadData()
         guard viewModel.instructions.count == 0 else{
         instructions.instructionInit(steps: viewModel.instructions[0].steps)
         return
     }
     }
+    
+    func addToFavourite() {
+        viewModel.addToFavourite()
+    }
+    func addLoadedData(data: Data) {
+       // viewModel.recipe.value?.image = data
+    }
+    
     
     func setupNavigationBar(){
         topConstraint.constant = -(navigationController?.navigationBar.frame.height)! - statusBarHeight()
@@ -53,9 +70,9 @@ class RecipeViewController: UIViewController, UIScrollViewDelegate {
     }
     
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        scrollView.bounces = scrollView.contentOffset.y > 100
-    }
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        scrollView.bounces = scrollView.contentOffset.y > 100
+//    }
     func statusBarHeight() -> CGFloat {
         if #available(iOS 13.0, *) {
             let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first

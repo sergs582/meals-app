@@ -13,9 +13,10 @@ class HeaderView: UIView {
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var title: UILabel!
+    @IBOutlet weak var save: UIButton!
     
     var imageURL : URL?
-    
+    weak var delegate : HeaderViewDelegate!
     override class func awakeFromNib() {
         super.awakeFromNib()
         
@@ -36,6 +37,7 @@ class HeaderView: UIView {
         DispatchQueue.global().async {
           if let data = try? Data(contentsOf: imageURL),
               let image = UIImage(data: data){
+              self.delegate.addLoadedData(data: data)
               DispatchQueue.main.async {
                 self.image.image = image
               }
@@ -44,13 +46,24 @@ class HeaderView: UIView {
           }
     }
     
-    func commonInit(imageURL: URL?, title: String){
+    @IBAction func addToFavourite(_ sender: Any) {
+        delegate.addToFavourite()
+        save.backgroundColor = .green
+        save.isEnabled = false
+        save.setTitle("Saved", for: .normal)
+    }
+    
+    func commonInit(imageURL: URL?, image: Data?, title: String){
         Bundle.main.loadNibNamed("HeaderView", owner: self, options: nil)
         self.imageURL = imageURL
         contentView.fixInView(self)
         self.title.text = title
-        print("TITLE \(title)")
+        save.layer.cornerRadius = 5
+        if let image = image{
+            self.image.image = UIImage(data: image)
+        }else{
         loadImage()
+        }
     }
 
 }

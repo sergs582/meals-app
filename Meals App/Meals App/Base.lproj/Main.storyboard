@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="JUz-aY-Eon">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="JUz-aY-Eon">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,38 +17,23 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3d0-c3-6LX">
-                                <rect key="frame" x="0.0" y="131" width="414" height="682"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <sections/>
                             </tableView>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="cVF-WQ-RNx">
-                                <rect key="frame" x="10" y="94" width="394" height="32"/>
-                                <segments>
-                                    <segment title="Favourite"/>
-                                    <segment title="History"/>
-                                </segments>
-                                <color key="selectedSegmentTintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <connections>
-                                    <action selector="segmentChanged:" destination="ve3-TI-eAu" eventType="valueChanged" id="W7D-Xr-evQ"/>
-                                </connections>
-                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="AeQ-tT-Auu" firstAttribute="trailing" secondItem="cVF-WQ-RNx" secondAttribute="trailing" constant="10" id="0A3-17-3bv"/>
-                            <constraint firstItem="cVF-WQ-RNx" firstAttribute="leading" secondItem="AeQ-tT-Auu" secondAttribute="leading" constant="10" id="PvU-4K-jSQ"/>
+                            <constraint firstItem="3d0-c3-6LX" firstAttribute="top" secondItem="AeQ-tT-Auu" secondAttribute="top" id="HKh-Qj-cRp"/>
                             <constraint firstItem="AeQ-tT-Auu" firstAttribute="bottom" secondItem="3d0-c3-6LX" secondAttribute="bottom" id="aRa-gY-CsF"/>
                             <constraint firstItem="3d0-c3-6LX" firstAttribute="leading" secondItem="AeQ-tT-Auu" secondAttribute="leading" id="g45-5e-Y4w"/>
-                            <constraint firstItem="3d0-c3-6LX" firstAttribute="top" secondItem="cVF-WQ-RNx" secondAttribute="bottom" constant="6" id="m36-70-Nen"/>
                             <constraint firstItem="AeQ-tT-Auu" firstAttribute="trailing" secondItem="3d0-c3-6LX" secondAttribute="trailing" id="paJ-ww-OX1"/>
-                            <constraint firstItem="cVF-WQ-RNx" firstAttribute="top" secondItem="AeQ-tT-Auu" secondAttribute="top" constant="6" id="qIQ-0n-XzX"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="AeQ-tT-Auu"/>
                     </view>
                     <navigationItem key="navigationItem" title="Favourite" id="uUU-nY-VLf"/>
                     <connections>
                         <outlet property="RecipesTable" destination="3d0-c3-6LX" id="sBn-Dp-H6F"/>
-                        <outlet property="segmentedControl" destination="cVF-WQ-RNx" id="bGa-bc-jsi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="37q-xC-2Gj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -113,7 +99,7 @@
                                                     </view>
                                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="l5m-qu-XVg" customClass="InfoCollectionView" customModule="Meals_App" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="400" width="414" height="120"/>
-                                                        <color key="backgroundColor" red="0.92549019610000005" green="0.90980392160000001" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="backgroundColor" name="RecipeViewComponentColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="120" id="NzR-nO-vXj"/>
                                                         </constraints>
@@ -136,7 +122,7 @@
                                                     </label>
                                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="bOP-x5-uxI" customClass="IngredientsCollectionView" customModule="Meals_App" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="560" width="414" height="170"/>
-                                                        <color key="backgroundColor" red="0.92549019610000005" green="0.90980392160000001" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="backgroundColor" name="RecipeViewComponentColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="170" id="B09-TO-MLk"/>
                                                         </constraints>
@@ -269,4 +255,9 @@
             <point key="canvasLocation" x="41" y="-473"/>
         </scene>
     </scenes>
+    <resources>
+        <namedColor name="RecipeViewComponentColor">
+            <color red="0.92549019607843142" green="0.90980392156862744" blue="0.90980392156862744" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
 </document>

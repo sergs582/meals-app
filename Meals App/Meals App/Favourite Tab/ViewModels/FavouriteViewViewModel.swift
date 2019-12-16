@@ -10,31 +10,38 @@ import Foundation
 
 class FavouriteViewViewModel {
     
-    private var recipes = [Recipe]()
+     var recipes : Box<[Recipe]?> = Box(nil)
     
     func recipesCount() -> Int{
-        return recipes.count
+        return recipes.value?.count ?? 0
     }
     
-    func imageURL(at index : Int) -> URL?{
-        return URL(string: recipes[index].imageURL)
+    func recipeImage(at index : Int) -> Data?{
+        return recipes.value?[index].image
     }
     
     func recipeTitle(at index : Int) -> String{
-        return recipes[index].title
+        return recipes.value?[index].title ?? "Title"
     }
     
     func recipeCuisine(at index : Int) -> String{
-        return recipes[index].cuisine ?? "International"
+        return recipes.value?[index].cuisine ?? "International"
     }
     
+    private var recipeModel = RecipeModel()
+    
+    func deleteRecipeWith(index: Int){
+        recipeModel.deleteRecipe(withId: recipes.value![index].id)
+        recipes.value = recipeModel.toRecipeArray()
+    }
+
     
     var selectedType : ResultsType = .favourite
     
     var recipeViewModel = RecipeViewViewModel()
     
     init() {
-       
+        recipes.value = recipeModel.toRecipeArray()
     }
     
 }

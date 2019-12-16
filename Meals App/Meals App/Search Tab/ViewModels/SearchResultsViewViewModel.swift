@@ -10,8 +10,9 @@ import Foundation
 
 class SearchResultsViewViewModel {
     
-    var recipes : Box<[SearchRecipe]?> = Box(nil)
-       
+    var recipes : Box<[SearchRecipe]?> = Box([SearchRecipe]())
+    var newItems : [SearchRecipe]?
+    var fetchingMore = false
        func recipesCount() -> Int{
         return recipes.value?.count ?? 0
        }
@@ -38,21 +39,28 @@ class SearchResultsViewViewModel {
        var searchRecipeManager = APISearchRecipeManager(apiKey: "b9b785cbea634d2c82b2b9855cf33756")
     
     
-       func fetchResults(query: String?){
+    func fetchResults(query: String?, number: Int){
         guard let query = query else { return }
-        searchRecipeManager.fetchRecipeWith(recipeName: query, number: 10) {  (result) in
+        searchRecipeManager.fetchRecipeWith(recipeName: query, number: number) {  (result) in
             switch result {
             case .Success(let recipes):
-                self.recipes.value = recipes.results
+                if (self.recipes.value!.count >= 10 && self.recipes.value!.count < 100 && self.fetchingMore) {
+                    self.recipes.value!.append(contentsOf: recipes.results)
+                    self.recipes.value = NSSet(array: self.recipes.value!).allObjects as? [SearchRecipe]
+                    
+                   //self.recipes.value!.
+                }else if self.recipes.value!.count < 10{
+                    self.recipes.value = recipes.results
+                }
                 print(recipes.results)
             case .Failure(let error):
                 print(error)
             }
         }
         
-        
-        
     }
+    
+  
        
        init() {
            
