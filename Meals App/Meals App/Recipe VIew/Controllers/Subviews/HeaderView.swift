@@ -11,40 +11,22 @@ import UIKit
 class HeaderView: UIView {
 
     @IBOutlet var contentView: UIView!
-    @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var headerImage: UIImageView!
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var save: UIButton!
-    
     var imageURL : URL?
     weak var delegate : HeaderViewDelegate!
-    override class func awakeFromNib() {
-        super.awakeFromNib()
-        
-    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-      
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        
     }
     
-    func loadImage(){
-        if let imageURL = imageURL{
-        DispatchQueue.global().async {
-          if let data = try? Data(contentsOf: imageURL),
-              let image = UIImage(data: data){
-              self.delegate.addLoadedData(data: data)
-              DispatchQueue.main.async {
-                self.image.image = image
-              }
-          }
-          }
-          }
-    }
+    
+
     
     @IBAction func addToFavourite(_ sender: Any) {
         delegate.addToFavourite()
@@ -60,12 +42,12 @@ class HeaderView: UIView {
         self.title.text = title
         save.layer.cornerRadius = 5
         if let image = image{
-            self.image.image = UIImage(data: image)
+          self.headerImage.image = UIImage(data: image)
         }else{
-        loadImage()
+            guard let imageURL = imageURL else { return }
+            self.headerImage.kf.setImage(with: imageURL)
         }
     }
-
 }
 
 extension UIView{

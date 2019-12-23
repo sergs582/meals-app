@@ -1,5 +1,5 @@
 //
-//  RecipeModel.swift
+//  RecipeDataManager.swift
 //  Meals App
 //
 //  Created by Сергей on 14.12.2019.
@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-class RecipeModel {
+class RecipeDataManager {
     
     var context : NSManagedObjectContext!
     var recipeEntities = [RecipeEntity]()
@@ -17,8 +17,6 @@ class RecipeModel {
     private func fetchRecipes() {
         context = CoreDataStack().persistentContainer.viewContext
         let request : NSFetchRequest<RecipeEntity> = RecipeEntity.fetchRequest()
-        //let typePredicate = NSPredicate(format: "type = %@", type)
-        //request.predicate = typePredicate
         do{
             let results = try context.fetch(request)
             recipeEntities = results
@@ -56,23 +54,18 @@ class RecipeModel {
         savingRecipe.instructions = NSOrderedSet(array: recipe.instruction[0].steps.map{$0.toInstructionEntity(context: context)})
         savingRecipe.recipeInfo = NSOrderedSet(array: recipe.information.map{$0.toRecipeInfoEntity(context: context)})
         DispatchQueue.global().async {
-        if let data = try? Data(contentsOf: URL(string: recipe.imageURL)!){
-            savingRecipe.image = data
-            savingRecipe.ingredients = NSSet(array: recipe.ingredients.map{$0.toIngredientEntity(context: self.context)})
-            DispatchQueue.main.async {
-                do{
-                    try self.context.save()
-                }catch{
-                    print(error)
+            if let data = try? Data(contentsOf: URL(string: recipe.imageURL)!){
+                savingRecipe.image = data
+                savingRecipe.ingredients = NSSet(array: recipe.ingredients.map{$0.toIngredientEntity(context: self.context)})
+                DispatchQueue.main.async {
+                    do{
+                        try self.context.save()
+                    }catch{
+                        print(error)
+                    }
                 }
             }
         }
-    }
-            
-        
-        
-       
-        
     }
  
     
@@ -84,14 +77,12 @@ class RecipeModel {
         for obj in objects {
             context.delete(obj)
         }
-
         do {
-            try context.save() // <- remember to put this :)
+            try context.save()
         } catch {
-            // Do something... fatalerror
+            print(error)
         }
     }
-    
 }
 
 extension IngredientEntity {

@@ -9,6 +9,9 @@
 import UIKit
 
 class RecipeViewController: UIViewController, UIScrollViewDelegate, HeaderViewDelegate {
+  
+    
+    
 
     @IBOutlet weak var headerView: HeaderView!
     @IBOutlet weak var instructions: UIStackView!
@@ -22,8 +25,8 @@ class RecipeViewController: UIViewController, UIScrollViewDelegate, HeaderViewDe
         super.viewDidLoad()
         scrollView.delegate = self
         setupNavigationBar()
-        commonInit()
         headerView.delegate = self
+        commonInit()
         guard viewModel.recipe.value?.image != nil else {
             viewModel.recipe.bind {  (recipe) in
                 DispatchQueue.main.async {
@@ -32,8 +35,6 @@ class RecipeViewController: UIViewController, UIScrollViewDelegate, HeaderViewDe
             }
             return
         }
-        
-    
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -42,24 +43,19 @@ class RecipeViewController: UIViewController, UIScrollViewDelegate, HeaderViewDe
     }
     
     func commonInit(){
-        
         headerView.commonInit(imageURL: viewModel.headerImageURL, image: viewModel.recipe.value?.image, title: viewModel.recipeTitle)
         infoCollection.commonInit(information: viewModel.information!)
         ingredientsCollection.commonInit(ingredients: viewModel.ingredients, savedIngredients: viewModel.recipe.value?.savedIngredients)
         ingredientsCollection.reloadData()
         guard viewModel.instructions.count == 0 else{
-        instructions.instructionInit(steps: viewModel.instructions[0].steps)
-        return
-    }
+          instructions.instructionInit(steps: viewModel.instructions[0].steps)
+          return
+        }
     }
     
     func addToFavourite() {
         viewModel.addToFavourite()
     }
-    func addLoadedData(data: Data) {
-       // viewModel.recipe.value?.image = data
-    }
-    
     
     func setupNavigationBar(){
         topConstraint.constant = -(navigationController?.navigationBar.frame.height)! - statusBarHeight()
@@ -68,11 +64,7 @@ class RecipeViewController: UIViewController, UIScrollViewDelegate, HeaderViewDe
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.view.backgroundColor = .clear
     }
-    
-    
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        scrollView.bounces = scrollView.contentOffset.y > 100
-//    }
+
     func statusBarHeight() -> CGFloat {
         if #available(iOS 13.0, *) {
             let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
@@ -85,9 +77,7 @@ class RecipeViewController: UIViewController, UIScrollViewDelegate, HeaderViewDe
 }
 
 fileprivate extension UIStackView {
-    
     func instructionInit(steps : [Step]){
-        print(steps.count)
         guard steps.count != 0 else { return }
         for i in 0..<steps.count{
             let step = InstructionStepView()
@@ -96,5 +86,4 @@ fileprivate extension UIStackView {
             self.translatesAutoresizingMaskIntoConstraints = false
         }
     }
-    
 }

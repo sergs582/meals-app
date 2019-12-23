@@ -10,6 +10,27 @@ import Foundation
 
 class SearchViewViewModel {
     
-    var recentSearch : Box<[String]> = Box(["Burgers","Pizza","Cheese","Plov"])
+    var recentSearch : Box<[String]> = Box([])
+    private var userDefaults = UserDefaults.standard
+
+    func updateRecent(newQuery query: String) {
+        if !recentSearch.value.contains(query) {
+        recentSearch.value.insert(query, at: 0)
+        
+          if recentSearch.value.count >= 4 {
+            recentSearch.value.removeLast()
+          }
+          updateUD()
+        }
+    }
+    
+    func updateUD(){
+        userDefaults.set(recentSearch.value, forKey: "Recent")
+    }
+    
+    init(){
+        recentSearch.value = userDefaults.value(forKey: "Recent") as? [String] ?? []
+       
+    }
     
 }

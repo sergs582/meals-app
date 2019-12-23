@@ -2,7 +2,9 @@
 
 import UIKit
 
-class SearchViewController: UIViewController, UISearchBarDelegate {
+class SearchViewController: UIViewController, UISearchBarDelegate, QueryDelegate {
+    
+    
     
     @IBOutlet weak var recentSearchTable: UITableView!
     var viewModel = SearchViewViewModel()
@@ -18,12 +20,11 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
       
         setupTable(recentSearchTable)
         viewModel.recentSearch.bind { [unowned self] (recent) in
+            self.recentSearchTable.isHidden = false
             if recent.count == 0{
-                print("here1")
                 self.recentSearchTable.isHidden = true
             }
-            print("here")
-            
+
             DispatchQueue.main.async {
                 self.recentSearchTable.reloadData()
             }
@@ -40,10 +41,16 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
             let searchStoryboard : UIStoryboard? = UIStoryboard(name: "SearchResults", bundle: nil)
             let resultsView = searchStoryboard?.instantiateViewController(withIdentifier: "searchResultsTable") as! SearchResultsController
             resultsView.resultsDelegate = self
+            resultsView.queryDelegate = self
             let search = UISearchController(searchResultsController: resultsView)
             search.searchResultsUpdater = (resultsView as UISearchResultsUpdating)
    
             navigationItem.searchController = search
+    
+    }
+    
+    func addToRecent(query: String) {
+        viewModel.updateRecent(newQuery: query)
     
     }
     
@@ -95,10 +102,10 @@ extension SearchViewController : RecentDelegate, RecipeResultsDelegate {
     
     func clearRecent() {
         viewModel.recentSearch.value = [String]()
+        viewModel.updateUD()
     }
     
     func didSelectResult(recipe: Recipe) {
-    //        //performSegue(withIdentifier: "rec", sender: cell)
            let view = storyboard?.instantiateViewController(withIdentifier: "recipe") as! RecipeViewController
         view.viewModel = RecipeViewViewModel(withRecipe: recipe)
            navigationController?.pushViewController(view, animated: true)

@@ -8,7 +8,7 @@ class SearchResultsController: UITableViewController, UISearchBarDelegate, UISea
     let CellReuseIdentifier = "searchCell"
     
     weak var resultsDelegate : RecipeResultsDelegate?
-    
+    weak var queryDelegate: QueryDelegate?
     let viewModel = SearchResultsViewViewModel()
     var timer : Timer?
     
@@ -37,7 +37,8 @@ class SearchResultsController: UITableViewController, UISearchBarDelegate, UISea
         if currentText.count >= 3 {
 
         timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { _ in
-                 self.viewModel.searchQuery.value = searchController.searchBar.text
+            self.viewModel.searchQuery.value = searchController.searchBar.text
+            self.queryDelegate?.addToRecent(query: currentText)
             })
         }
         if searchController.searchBar.text == "" {
@@ -75,12 +76,9 @@ class SearchResultsController: UITableViewController, UISearchBarDelegate, UISea
     
     func beginBatchFetched() {
         viewModel.fetchingMore = true
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + 4, execute: {
-           
             self.viewModel.fetchResults(query: self.viewModel.searchQuery.value , number: 30)
             self.viewModel.fetchingMore = false
-          //self.tableView.reloadData()
         })
     }
     

@@ -1,6 +1,7 @@
 
 
 import UIKit
+import Kingfisher
 
 class RecipeCell: UITableViewCell {
 
@@ -24,17 +25,7 @@ class RecipeCell: UITableViewCell {
         shortDescription.text = descriptionText
         
         if let imageURL = imageURL{
-      DispatchQueue.global().async {
-        if let data = try? Data(contentsOf: imageURL),
-            let image = UIImage(data: data){
-            
-            DispatchQueue.main.async {
-            
-            self.imageForCell.image = image
-            }
-        }
-        
-        }
+            imageForCell.kf.setImage(with: imageURL)
         }else if let data = imageData{
             imageForCell.image = UIImage(data: data)
         }

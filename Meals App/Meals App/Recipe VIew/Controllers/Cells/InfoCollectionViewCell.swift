@@ -10,7 +10,6 @@ import UIKit
 
 class InfoCollectionViewCell : UICollectionViewCell{
     
-    
     @IBOutlet weak var view : UIView!
     @IBOutlet weak var image : UIImageView!
     @IBOutlet weak var label : UILabel!
@@ -22,7 +21,7 @@ class InfoCollectionViewCell : UICollectionViewCell{
         super.awakeFromNib()
         view.layer.cornerRadius = view.frame.height/2
         image.clipsToBounds = true
-        ShadowToView(view)
+        shadowToView(view)
     }
     
     func commonInit(){
@@ -42,7 +41,7 @@ class InfoCollectionViewCell : UICollectionViewCell{
         }
     }
     
-    func ShadowToView(_ view : UIView){
+    func shadowToView(_ view : UIView){
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOffset = CGSize(width: 4, height: -1)
         view.layer.shadowOpacity = 0.5

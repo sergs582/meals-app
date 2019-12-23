@@ -33,7 +33,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Favourite" id="uUU-nY-VLf"/>
                     <connections>
-                        <outlet property="RecipesTable" destination="3d0-c3-6LX" id="sBn-Dp-H6F"/>
+                        <outlet property="recipesTable" destination="3d0-c3-6LX" id="7Y4-GO-GER"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="37q-xC-2Gj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

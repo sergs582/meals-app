@@ -10,5 +10,4 @@ import Foundation
 
 protocol HeaderViewDelegate: class {
     func addToFavourite()
-    func addLoadedData(data : Data)
 }

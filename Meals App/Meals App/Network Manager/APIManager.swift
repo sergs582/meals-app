@@ -22,7 +22,8 @@ protocol APIManager {
     
     func JSONTaskWith(request: URLRequest, completion: @escaping JSONCompletionHandler) -> JSONTask
     func fetch<T>(request: URLRequest, decode: @escaping (Data) -> T?, completion: @escaping (APIResult<T>) -> Void)
-    
+    func fetchRecipeWith(recipeId: Int, completion: @escaping (APIResult<RecipeResponse>) -> Void)
+    func fetchRecipeWith(recipeName: String, number: Int, completion: @escaping (APIResult<SearchRecipesResponse>) -> Void)
 }
 
 extension APIManager {
@@ -71,9 +72,5 @@ extension APIManager {
             }
         }
         dataTask.resume()
-        
     }
-    
-    
-    
 }

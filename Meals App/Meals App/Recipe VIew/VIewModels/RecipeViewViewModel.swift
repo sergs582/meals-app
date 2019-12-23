@@ -11,11 +11,10 @@ import Foundation
 class RecipeViewViewModel {
     
     var recipe : Box<Recipe?> = Box(nil)
-    private var apiKey = "b9b785cbea634d2c82b2b9855cf33756"
-    var recipeModel = RecipeModel()
+    var recipeManager = RecipeDataManager()
     
     func addToFavourite(){
-        recipeModel.saveRecipe(recipe: recipe.value!)
+        recipeManager.saveRecipe(recipe: recipe.value!)
     }
     
     var recipeTitle: String {
@@ -53,30 +52,29 @@ class RecipeViewViewModel {
         return recipe.value?.instruction ?? [RecipeInstruction]()
     }
     
-    var recipeManager = APIRecipeManager(apiKey: "b9b785cbea634d2c82b2b9855cf33756")
+    var recipeAPIManager = APIRecipeManager(apiKey: "b9b785cbea634d2c82b2b9855cf33756")
     
     init(){
         
     }
+    
     init(withRecipe recipe: Recipe) {
         fetchResult(recipeId: recipe.id)
     }
+    
     init(savedRecipe recipe: Recipe) {
         self.recipe.value = recipe
     }
     
-    
     func fetchResult(recipeId: Int) {
-        recipeManager.fetchRecipeWith(recipeId: recipeId) { (result) in
+        recipeAPIManager.fetchRecipeWith(recipeId: recipeId) { (result) in
             switch result {
-            case .Success(let recipe):
-                self.recipe.value = recipe.toRecipe()
-            case .Failure(let error):
-                print(error)
+                case .Success(let recipe):
+                    self.recipe.value = recipe.toRecipe()
+                case .Failure(let error):
+                    print(error)
             }
         }
         
     }
-    
-    
 }

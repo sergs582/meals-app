@@ -12,7 +12,7 @@ class IngredientsCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var amountLabel: UILabel!
-    @IBOutlet weak var picture: UIImageView!
+    @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var imageFrameView: UIView!
     @IBOutlet weak var width: NSLayoutConstraint!
         
@@ -29,35 +29,22 @@ class IngredientsCollectionViewCell: UICollectionViewCell {
         nameLabel.text = name
         amountLabel.text = amountInMetric
         if imageData == nil {
-            loadImage()
+            guard let imageURL = imageURL else { return }
+            image.kf.setImage(with: imageURL)
         }else{
-            picture.image = UIImage(data: imageData!)
-        }
-        
-    }
-    
-    func loadImage(){
-        if let imageURL = imageURL{
-            DispatchQueue.global().async {
-                if let data = try? Data(contentsOf: imageURL),
-                    let image = UIImage(data: data){
-                    DispatchQueue.main.async {
-                        self.picture.image = image
-                    }
-                }
-            }
+            image.image = UIImage(data: imageData!)
         }
     }
     
     func setupContent(for view : UIView){
         width.constant = self.frame.width
         view.layer.cornerRadius = 15
-        picture.layer.cornerRadius = 15
-        picture.clipsToBounds = true
-        ShadowToView(view)
+        image.layer.cornerRadius = 15
+        image.clipsToBounds = true
+        shadowToView(view)
     }
     
-    func ShadowToView(_ view: UIView){
+    func shadowToView(_ view: UIView){
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOffset = CGSize(width: 4, height: 2)
         view.layer.shadowRadius = 3

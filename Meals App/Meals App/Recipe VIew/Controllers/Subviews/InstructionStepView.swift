@@ -14,17 +14,14 @@ class InstructionStepView: UIView {
     @IBOutlet weak var stepDescription: UITextView!
     @IBOutlet weak var index: UILabel!
     
-  
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
     }
-    
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        
     }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -34,7 +31,6 @@ class InstructionStepView: UIView {
         self.index.text = "\(index)"
         self.stepDescription.text = description
         contentView.frame = self.bounds
-        print(self.bounds)
         self.index.layer.masksToBounds = true
         self.index.layer.cornerRadius = self.index.frame.height/2
         addSubview(contentView)

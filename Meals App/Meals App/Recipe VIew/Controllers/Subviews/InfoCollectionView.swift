@@ -24,10 +24,9 @@ class InfoCollectionView: UICollectionView {
         self.information = information
         self.reloadData()
     }
-
 }
 
-
+//MARK: CollectionView DataSource and Delegate
 extension InfoCollectionView :  UICollectionViewDataSource, UICollectionViewDelegate{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -28,20 +28,23 @@ class FavouriteViewViewModel {
         return recipes.value?[index].cuisine ?? "International"
     }
     
-    private var recipeModel = RecipeModel()
+    private var recipeManager = RecipeDataManager()
     
     func deleteRecipeWith(index: Int){
-        recipeModel.deleteRecipe(withId: recipes.value![index].id)
-        recipes.value = recipeModel.toRecipeArray()
+        recipeManager.deleteRecipe(withId: recipes.value![index].id)
+        recipes.value = recipeManager.toRecipeArray()
     }
 
+    func update(){
+        recipes.value = recipeManager.toRecipeArray()
+    }
     
     var selectedType : ResultsType = .favourite
     
     var recipeViewModel = RecipeViewViewModel()
     
     init() {
-        recipes.value = recipeModel.toRecipeArray()
+        recipes.value = recipeManager.toRecipeArray()
     }
     
 }

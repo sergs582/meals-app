@@ -41,6 +41,20 @@ final class APIRecipeManager: APIManager {
             }
         }, completion: completion)
     }
+    func fetchRecipeWith(recipeName: String, number: Int, completion: @escaping (APIResult<SearchRecipesResponse>) -> Void) {
+        let baseURL = "https://api.spoonacular.com/recipes/search?"
+        let finalURL = URLConfigurator(baseURL: baseURL, query: recipeName, number: number, apiKey: apiKey).buildSearchURL()
+        let request = URLRequest(url: finalURL!)
+        fetch(request: request, decode: { (data) -> SearchRecipesResponse? in
+            do{
+                let recipes = try JSONDecoder().decode(SearchRecipesResponse.self, from: data)
+                return recipes
+            }catch let error {
+                print(error)
+                return nil
+            }
+        }, completion: completion)
+    }
     
     
 }

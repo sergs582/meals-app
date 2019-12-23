@@ -10,7 +10,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HeaderView" customModule="Meals_App" customModuleProvider="target">
             <connections>
                 <outlet property="contentView" destination="C4G-hB-wcd" id="ECU-RB-cje"/>
-                <outlet property="image" destination="0eh-Zp-N6a" id="pS7-Lt-X07"/>
+                <outlet property="headerImage" destination="0eh-Zp-N6a" id="8rl-8Q-QBh"/>
                 <outlet property="save" destination="2gu-8h-09z" id="jt5-yh-Ady"/>
                 <outlet property="title" destination="Bp4-or-KP0" id="efn-tY-wE5"/>
             </connections>

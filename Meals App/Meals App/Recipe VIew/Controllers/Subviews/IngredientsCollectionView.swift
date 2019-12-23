@@ -17,14 +17,12 @@ class IngredientsCollectionView: UICollectionView {
     func commonInit(ingredients: [Ingredient], savedIngredients: [SavedIngredient]?){
         self.ingredients = ingredients
         self.savedIngredients = savedIngredients
-        print(ingredients)
         self.reloadData()
     }
 }
 
 extension IngredientsCollectionView : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         return ingredients.count == 0 ? (savedIngredients?.count ?? 0) : ingredients.count
     }
     
@@ -40,8 +38,6 @@ extension IngredientsCollectionView : UICollectionViewDelegate, UICollectionView
             cell.amountInMetric = savedIngredients![indexPath.row].amount
             cell.imageData = savedIngredients![indexPath.row].image
         }
-        
-        
         cell.commonInit()
         return cell
     }
