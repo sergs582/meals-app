@@ -7,11 +7,12 @@
 //
 
 import Foundation
+import RxSwift
 
 class FavouriteViewViewModel {
     
-     var recipes : Box<[Recipe]?> = Box(nil)
-    
+    var recipes : Box<[Recipe]?> = Box(nil)
+   
     func recipesCount() -> Int{
         return recipes.value?.count ?? 0
     }
@@ -41,7 +42,7 @@ class FavouriteViewViewModel {
     
     var selectedType : ResultsType = .favourite
     
-    var recipeViewModel = RecipeViewViewModel()
+    var recipeViewModel : RecipeViewViewModel!
     
     init() {
         recipes.value = recipeManager.toRecipeArray()

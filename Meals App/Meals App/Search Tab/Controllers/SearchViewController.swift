@@ -1,6 +1,7 @@
 
 
 import UIKit
+import RxSwift
 
 class SearchViewController: UIViewController, UISearchBarDelegate, QueryDelegate {
     
@@ -17,23 +18,16 @@ class SearchViewController: UIViewController, UISearchBarDelegate, QueryDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         CustomizeNavBar()
-      
         setupTable(recentSearchTable)
         viewModel.recentSearch.bind { [unowned self] (recent) in
             self.recentSearchTable.isHidden = false
             if recent.count == 0{
                 self.recentSearchTable.isHidden = true
             }
-
             DispatchQueue.main.async {
                 self.recentSearchTable.reloadData()
             }
-            
-
         }
-        
-        
-        
     }
 
 
@@ -42,11 +36,12 @@ class SearchViewController: UIViewController, UISearchBarDelegate, QueryDelegate
             let resultsView = searchStoryboard?.instantiateViewController(withIdentifier: "searchResultsTable") as! SearchResultsController
             resultsView.resultsDelegate = self
             resultsView.queryDelegate = self
+    
             let search = UISearchController(searchResultsController: resultsView)
+            resultsView.searchController = search
             search.searchResultsUpdater = (resultsView as UISearchResultsUpdating)
    
             navigationItem.searchController = search
-    
     }
     
     func addToRecent(query: String) {
@@ -107,7 +102,9 @@ extension SearchViewController : RecentDelegate, RecipeResultsDelegate {
     
     func didSelectResult(recipe: Recipe) {
            let view = storyboard?.instantiateViewController(withIdentifier: "recipe") as! RecipeViewController
-        view.viewModel = RecipeViewViewModel(withRecipe: recipe)
+        view.id = recipe.id
+        //view.viewModel = RecipeViewViewModel(saveTap: view.headerView.save.rx.tap.asObservable(), recipeID: recipe.id)
+    
            navigationController?.pushViewController(view, animated: true)
     }
     

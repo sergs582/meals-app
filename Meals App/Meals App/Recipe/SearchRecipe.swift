@@ -16,6 +16,9 @@ struct SearchRecipe : Codable{
     var id : Int
     var title : String
     var image : String
+    var imageURL : URL? {
+        return URL(string: "https://spoonacular.com/recipeImages/\(self.image)")
+    }
     
     func toRecipe() -> Recipe{
         return Recipe(id: id, title: title, imageURL: image)

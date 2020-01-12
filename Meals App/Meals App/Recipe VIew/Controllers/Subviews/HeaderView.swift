@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RxSwift
 
 class HeaderView: UIView {
 
@@ -25,20 +26,14 @@ class HeaderView: UIView {
         super.init(coder: coder)
     }
     
-    
-
-    
-    @IBAction func addToFavourite(_ sender: Any) {
-        delegate.addToFavourite()
-        save.backgroundColor = .green
-        save.isEnabled = false
-        save.setTitle("Saved", for: .normal)
+    func commonInit(){
+        Bundle.main.loadNibNamed("HeaderView", owner: self, options: nil)
+        contentView.fixInView(self)
+        
     }
     
-    func commonInit(imageURL: URL?, image: Data?, title: String){
-        Bundle.main.loadNibNamed("HeaderView", owner: self, options: nil)
+    func setupHW(imageURL: URL?, image: Data?, title: String){
         self.imageURL = imageURL
-        contentView.fixInView(self)
         self.title.text = title
         save.layer.cornerRadius = 5
         if let image = image{

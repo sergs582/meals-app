@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 typealias JSONTask = URLSessionDataTask
 typealias JSONCompletionHandler = (Data?, HTTPURLResponse?, Error?) -> Void
@@ -22,6 +23,8 @@ protocol APIManager {
     
     func JSONTaskWith(request: URLRequest, completion: @escaping JSONCompletionHandler) -> JSONTask
     func fetch<T>(request: URLRequest, decode: @escaping (Data) -> T?, completion: @escaping (APIResult<T>) -> Void)
+    func fetch<T>(request: URLRequest, decode: @escaping (Data) -> T?) -> Single<T>
+    
     func fetchRecipeWith(recipeId: Int, completion: @escaping (APIResult<RecipeResponse>) -> Void)
     func fetchRecipeWith(recipeName: String, number: Int, completion: @escaping (APIResult<SearchRecipesResponse>) -> Void)
 }
@@ -55,9 +58,8 @@ extension APIManager {
     }
     
     func fetch<T>(request: URLRequest, decode: @escaping (Data) -> T?, completion: @escaping (APIResult<T>) -> Void) {
-        
         let dataTask = JSONTaskWith(request: request) { (data, response, error) in
-            
+
             guard let data = data else {
                 if let error = error{
                     completion(.Failure(error))
@@ -73,4 +75,29 @@ extension APIManager {
         }
         dataTask.resume()
     }
+    
+    func fetch<T>(request: URLRequest, decode: @escaping (Data) -> T?) -> Single<T> {
+        return Single<T>.create{ single in
+            let dataTask = self.JSONTaskWith(request: request) {
+                (data, response, error) in
+                guard let data = data else {
+                    if let error = error {
+                        single(.error(error))
+                    }
+                    return
+                }
+                if let value = decode(data) {
+                    single(.success(value))
+                }else {
+                    let error = NSError(domain: MLSNetworkingErrorDomain, code: 200, userInfo: nil)
+                    single(.error(error))
+                }
+            }
+            dataTask.resume()
+            return Disposables.create{
+                dataTask.cancel()
+            }
+        }
+    }
+    
 }

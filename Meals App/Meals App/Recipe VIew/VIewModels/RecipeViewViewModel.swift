@@ -7,15 +7,18 @@
 //
 
 import Foundation
+import RxSwift
 
 class RecipeViewViewModel {
     
     var recipe : Box<Recipe?> = Box(nil)
     var recipeManager = RecipeDataManager()
+    var singleRecipe : Single<RecipeResponse>
+    let disposeBag = DisposeBag()
+    var saved: Observable<Bool>
     
-    func addToFavourite(){
-        recipeManager.saveRecipe(recipe: recipe.value!)
-    }
+    
+    
     
     var recipeTitle: String {
         return recipe.value?.title ?? "Title"
@@ -52,25 +55,33 @@ class RecipeViewViewModel {
         return recipe.value?.instruction ?? [RecipeInstruction]()
     }
     
-    var recipeAPIManager = APIRecipeManager(apiKey: "b9b785cbea634d2c82b2b9855cf33756")
+    var recipeAPIManager =
+        APIRecipeManager(apiKey: "b9b785cbea634d2c82b2b9855cf33756")
+        //StubApiRecipManager()
     
-    init(){
+    init(saveTap: Observable<Void>, recipeID: Int){
+       let recipeManager = RecipeDataManager()
+        singleRecipe = recipeAPIManager.fetchRecipeWith(recipeId: recipeID)
+        
+        saved = saveTap.withLatestFrom(self.singleRecipe.asObservable())
+        .flatMapLatest { recipe in
+            return recipeManager.saveRecipe(recipe: recipe.toRecipe())
+                .observeOn(MainScheduler.instance)
+                //.catchErrorJustReturn(false)
+        }
         
     }
     
-    init(withRecipe recipe: Recipe) {
-        fetchResult(recipeId: recipe.id)
-    }
-    
-    init(savedRecipe recipe: Recipe) {
-        self.recipe.value = recipe
-    }
+//  init(savedRecipe recipe: Recipe) {
+//
+//    }
     
     func fetchResult(recipeId: Int) {
         recipeAPIManager.fetchRecipeWith(recipeId: recipeId) { (result) in
             switch result {
-                case .Success(let recipe):
-                    self.recipe.value = recipe.toRecipe()
+                case .Success(_):
+                print("")
+                    //self.recipeSubject.onNext(recipe.toRecipe())
                 case .Failure(let error):
                     print(error)
             }

@@ -8,6 +8,8 @@
 
 import Foundation
 import CoreData
+import RxSwift
+import Kingfisher
 
 class RecipeDataManager {
     
@@ -44,28 +46,39 @@ class RecipeDataManager {
     
    
     
-    func saveRecipe(recipe: Recipe) {
+    func saveRecipe(recipe: Recipe) -> Observable<Bool> {
         context = CoreDataStack().persistentContainer.viewContext
         let savingRecipe = RecipeEntity(context: context)
+        var success = false
         savingRecipe.id = Int32(recipe.id)
         savingRecipe.title = recipe.title
         savingRecipe.cuisine = recipe.cuisine
         
         savingRecipe.instructions = NSOrderedSet(array: recipe.instruction[0].steps.map{$0.toInstructionEntity(context: context)})
         savingRecipe.recipeInfo = NSOrderedSet(array: recipe.information.map{$0.toRecipeInfoEntity(context: context)})
-        DispatchQueue.global().async {
+        let queue = DispatchQueue.global()
+        let group = DispatchGroup()
+        queue.async{
+            
+            group.enter()
             if let data = try? Data(contentsOf: URL(string: recipe.imageURL)!){
                 savingRecipe.image = data
                 savingRecipe.ingredients = NSSet(array: recipe.ingredients.map{$0.toIngredientEntity(context: self.context)})
-                DispatchQueue.main.async {
-                    do{
-                        try self.context.save()
-                    }catch{
-                        print(error)
-                    }
                 }
-            }
+            group.leave()
         }
+        group.wait()
+        
+            do{
+                try self.context.save()
+                success = true
+            }catch{
+                print(error)
+                success = false
+            }
+        
+        
+        return Observable.just(success)
     }
  
     

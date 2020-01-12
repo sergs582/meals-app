@@ -7,54 +7,79 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class RecipeViewController: UIViewController, UIScrollViewDelegate, HeaderViewDelegate {
-  
     
-    
-
     @IBOutlet weak var headerView: HeaderView!
     @IBOutlet weak var instructions: UIStackView!
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var infoCollection: InfoCollectionView!
     @IBOutlet weak var ingredientsCollection: IngredientsCollectionView!
-    var viewModel = RecipeViewViewModel()
+    var viewModel : RecipeViewViewModel!
+    var disposeBag : DisposeBag!
+    var id = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        disposeBag = DisposeBag()
         scrollView.delegate = self
         setupNavigationBar()
         headerView.delegate = self
-        commonInit()
-        guard viewModel.recipe.value?.image != nil else {
-            viewModel.recipe.bind {  (recipe) in
-                DispatchQueue.main.async {
-                    self.commonInit()
-                }
-            }
-            return
-        }
+        headerView.commonInit()
+        commonInit(recipe: Recipe(title: "Title", information: [], ingredients: [], savedIngredients: [], instruction: []))
+        setupViewModel()
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         self.navigationController?.navigationBar.shadowImage = nil
     }
     
-    func commonInit(){
-        headerView.commonInit(imageURL: viewModel.headerImageURL, image: viewModel.recipe.value?.image, title: viewModel.recipeTitle)
-        infoCollection.commonInit(information: viewModel.information!)
-        ingredientsCollection.commonInit(ingredients: viewModel.ingredients, savedIngredients: viewModel.recipe.value?.savedIngredients)
+    func commonInit(recipe: Recipe){
+        
+        headerView.setupHW(imageURL: URL(string: recipe.imageURL), image: recipe.image, title: recipe.title)
+        
+        infoCollection.commonInit(information: recipe.information)
+        ingredientsCollection.commonInit(ingredients: recipe.ingredients, savedIngredients: recipe.savedIngredients)
         ingredientsCollection.reloadData()
-        guard viewModel.instructions.count == 0 else{
-          instructions.instructionInit(steps: viewModel.instructions[0].steps)
+        guard recipe.instruction.count == 0 else{
+            instructions.instructionInit(steps: recipe.instruction[0].steps)
           return
         }
     }
+    func setupViewModel(){
+        viewModel = RecipeViewViewModel(saveTap: headerView.save.rx.tap.asObservable(), recipeID: id)
+        
+        viewModel.singleRecipe
+            .subscribe(
+                onSuccess: { recipe in
+                    DispatchQueue.main.async {
+                        self.commonInit(recipe: recipe.toRecipe())
+                    }
+                },
+                onError: { error in
+                    print(error)
+                })
+            .disposed(by: disposeBag)
+                 
+        viewModel.saved
+            .subscribe{ event in
+                if event.element! {
+                    self.headerView.save.backgroundColor = .green
+                    self.headerView.save.setTitle("Saved", for: .normal)
+                }else{
+                    self.headerView.save.setTitle("Error", for: .normal)
+                }
+
+            }
+            .disposed(by: disposeBag)
+    }
     
     func addToFavourite() {
-        viewModel.addToFavourite()
+      //  viewModel.addToFavourite()
     }
     
     func setupNavigationBar(){
