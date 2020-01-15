@@ -24,12 +24,12 @@ class SearchResultsController: UITableViewController, UISearchBarDelegate, UISea
         tableView.dataSource = nil
         tableView.rowHeight = 80
         setupBinding()
-       
     }
 
     func setupBinding(){
+        
         let recipes = searchController?.searchBar.rx.text.orEmpty
-            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+            .debounce(.seconds(1), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .flatMapLatest{
                 query -> Observable<[SearchRecipe]> in

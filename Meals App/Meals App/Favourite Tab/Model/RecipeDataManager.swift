@@ -9,16 +9,22 @@
 import Foundation
 import CoreData
 import RxSwift
-import Kingfisher
+
+enum DataManagerError: Error{
+    case notFoundRecipeWithId(id: Int)
+}
 
 class RecipeDataManager {
     
-    var context : NSManagedObjectContext!
-    var recipeEntities = [RecipeEntity]()
+    private var context : NSManagedObjectContext!
+    private var recipeEntities = [RecipeEntity]()
     
-    private func fetchRecipes() {
+    private func fetchRecipes(predicate: NSPredicate?) {
         context = CoreDataStack().persistentContainer.viewContext
         let request : NSFetchRequest<RecipeEntity> = RecipeEntity.fetchRequest()
+        if predicate != nil {
+            request.predicate = predicate
+        }
         do{
             let results = try context.fetch(request)
             recipeEntities = results
@@ -29,19 +35,31 @@ class RecipeDataManager {
     
     func toRecipeArray() -> [Recipe] {
         var recipes = [Recipe]()
-        fetchRecipes()
+        fetchRecipes(predicate: nil)
         guard recipeEntities.count != 0 else { return recipes}
         for recipeEntity in recipeEntities {
-            let ingredientsSet = recipeEntity.ingredients?.allObjects as! [IngredientEntity]
-            let savedIngredients = ingredientsSet.map{ $0.toSavedIngredients() }
-            let infoSet = recipeEntity.recipeInfo?.array as! [RecipeInfoEntity]
-            let recipeInfo = infoSet.map{ $0.toRecipeInfo() }
-            let steps = recipeEntity.instructions?.array as! [InstructionEntity]
-            let recipeInstruction = [RecipeInstruction(steps: steps.map{$0.toStep()})]
-            let recipe = Recipe(id: Int(recipeEntity.id), title: recipeEntity.title!, cuisine: recipeEntity.cuisine, image: recipeEntity.image, information: recipeInfo, savedIngredients: savedIngredients, instruction: recipeInstruction)
-            recipes.append(recipe)
+            recipes.append(toRecipe(recipeEntity))
         }
         return recipes
+    }
+    
+    func getRecipe(withId id: Int) throws -> Recipe {
+        let predicate = NSPredicate(format: "id == %d", Int32(id))
+        fetchRecipes(predicate: predicate)
+        guard recipeEntities.count != 0 else { throw DataManagerError.notFoundRecipeWithId(id: id) }
+        
+        return toRecipe(recipeEntities.first!)
+    }
+    
+    func toRecipe(_ recipeEntity: RecipeEntity) -> Recipe {
+        let ingredientsSet = recipeEntity.ingredients?.allObjects as! [IngredientEntity]
+        let savedIngredients = ingredientsSet.map{ $0.toSavedIngredients() }
+        let infoSet = recipeEntity.recipeInfo?.array as! [RecipeInfoEntity]
+        let recipeInfo = infoSet.map{ $0.toRecipeInfo() }
+        let steps = recipeEntity.instructions?.array as! [InstructionEntity]
+        let recipeInstruction = [RecipeInstruction(steps: steps.map{$0.toStep()})]
+        let recipe = Recipe(id: Int(recipeEntity.id), title: recipeEntity.title!, cuisine: recipeEntity.cuisine, image: recipeEntity.image, information: recipeInfo, savedIngredients: savedIngredients, instruction: recipeInstruction)
+        return recipe
     }
     
    

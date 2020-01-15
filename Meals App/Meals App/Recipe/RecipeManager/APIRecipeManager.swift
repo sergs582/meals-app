@@ -15,7 +15,7 @@ protocol ApiRecipeManagerProtocolLegacy {
 
 
 protocol ApiRecipeManagerProtocol {
-    func fetchRecipeWith(recipeId: Int) -> Single<RecipeResponse>
+    func fetchRecipeWith(recipeId: Int) -> Single<Recipe>
     func fetchRecipeWith(recipeName: String, number: Int) -> Observable<SearchRecipesResponse>
 }
 
@@ -76,7 +76,7 @@ final class APIRecipeManager: APIManager, ApiRecipeManagerProtocol {
         }, completion: completion)
     }
     
-    func fetchRecipeWith(recipeId: Int) -> Single<RecipeResponse> {
+    func fetchRecipeWith(recipeId: Int) -> Single<Recipe> {
         let baseURL = "https://api.spoonacular.com/recipes/"
         let finalURL = URLConfigurator(baseURL: baseURL,  apiKey: apiKey, recipeId: recipeId).buildRecipeURL()
         let request = URLRequest(url: finalURL!)
@@ -89,8 +89,7 @@ final class APIRecipeManager: APIManager, ApiRecipeManagerProtocol {
                 return nil
             }
         }
-        
-        return singleRecipe
+        return singleRecipe.map{ return $0.toRecipe() }
      }
      
      func fetchRecipeWith(recipeName: String, number: Int) -> Observable<SearchRecipesResponse> {

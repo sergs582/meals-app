@@ -11,41 +11,26 @@ import RxSwift
 
 class FavouriteViewViewModel {
     
-    var recipes : Box<[Recipe]?> = Box(nil)
+    var recipes : BehaviorSubject<[Recipe]>
    
-    func recipesCount() -> Int{
-        return recipes.value?.count ?? 0
-    }
-    
-    func recipeImage(at index : Int) -> Data?{
-        return recipes.value?[index].image
-    }
-    
-    func recipeTitle(at index : Int) -> String{
-        return recipes.value?[index].title ?? "Title"
-    }
-    
-    func recipeCuisine(at index : Int) -> String{
-        return recipes.value?[index].cuisine ?? "International"
-    }
-    
     private var recipeManager = RecipeDataManager()
     
     func deleteRecipeWith(index: Int){
-        recipeManager.deleteRecipe(withId: recipes.value![index].id)
-        recipes.value = recipeManager.toRecipeArray()
+        guard let changedRecipes = try? recipes.value() else { return }
+        let id = changedRecipes[index].id
+        recipeManager.deleteRecipe(withId: id)
+        update()
     }
 
     func update(){
-        recipes.value = recipeManager.toRecipeArray()
+        recipes.onNext(recipeManager.toRecipeArray())
     }
     
     var selectedType : ResultsType = .favourite
-    
     var recipeViewModel : RecipeViewViewModel!
     
     init() {
-        recipes.value = recipeManager.toRecipeArray()
+        recipes = BehaviorSubject<[Recipe]>(value: recipeManager.toRecipeArray())
     }
     
 }

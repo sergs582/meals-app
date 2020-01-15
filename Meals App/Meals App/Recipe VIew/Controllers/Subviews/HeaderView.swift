@@ -27,11 +27,15 @@ class HeaderView: UIView {
     }
     
     func commonInit(){
-        Bundle.main.loadNibNamed("HeaderView", owner: self, options: nil)
-        contentView.fixInView(self)
+        
         
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        Bundle.main.loadNibNamed("HeaderView", owner: self, options: nil)
+        contentView.fixInView(self)
+    }
     func setupHW(imageURL: URL?, image: Data?, title: String){
         self.imageURL = imageURL
         self.title.text = title

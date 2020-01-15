@@ -9,4 +9,9 @@ class RecentSearchHeader: UITableViewHeaderFooterView {
     @IBAction func clear(_ sender: Any) {
         recentDelegate?.clearRecent()
     }
+    
+    override class func awakeFromNib() {
+        super.awakeFromNib()
+        
+    }
 }

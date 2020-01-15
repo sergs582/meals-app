@@ -10,71 +10,46 @@ import Foundation
 import RxSwift
 
 class RecipeViewViewModel {
-    
-    var recipe : Box<Recipe?> = Box(nil)
+
     var recipeManager = RecipeDataManager()
-    var singleRecipe : Single<RecipeResponse>
+    var singleRecipe : Single<Recipe>
     let disposeBag = DisposeBag()
     var saved: Observable<Bool>
-    
-    
-    
-    
-    var recipeTitle: String {
-        return recipe.value?.title ?? "Title"
-    }
-    var headerImageURL: URL? {
-        return URL(string: recipe.value?.imageURL ?? "")
-    }
-    var cuisine: String? {
-        return recipe.value?.cuisine
-    }
-    
-    func infoImageName(atIndex index : Int) -> String? {
-        return recipe.value?.information[index].imageName
-    }
-    func ingredientImageURL(atIndex index : Int) -> URL {
-        return (recipe.value?.ingredients[index].imageURL())!
-    }
-    func informationCount() -> Int {
-        return recipe.value?.information.count ?? 0
-    }
-    var information : [RecipeInfo]? {
-        return recipe.value?.information ?? [RecipeInfo]()
-    }
-    func ingredientsCount() -> Int {
-        return recipe.value?.ingredients.count ?? 0
-    }
-    var ingredients : [Ingredient] {
-        return recipe.value?.ingredients ?? [Ingredient]()
-    }
-    func instructionsCount() -> Int {
-        return recipe.value?.information.count ?? 0
-    }
-    var instructions : [RecipeInstruction] {
-        return recipe.value?.instruction ?? [RecipeInstruction]()
-    }
-    
+
     var recipeAPIManager =
         APIRecipeManager(apiKey: "b9b785cbea634d2c82b2b9855cf33756")
         //StubApiRecipManager()
     
     init(saveTap: Observable<Void>, recipeID: Int){
-       let recipeManager = RecipeDataManager()
+        let recipeManager = RecipeDataManager()
         singleRecipe = recipeAPIManager.fetchRecipeWith(recipeId: recipeID)
         
         saved = saveTap.withLatestFrom(self.singleRecipe.asObservable())
         .flatMapLatest { recipe in
-            return recipeManager.saveRecipe(recipe: recipe.toRecipe())
+            return recipeManager.saveRecipe(recipe: recipe)
                 .observeOn(MainScheduler.instance)
-                //.catchErrorJustReturn(false)
+                .catchErrorJustReturn(false)
         }
-        
     }
     
-//  init(savedRecipe recipe: Recipe) {
-//
-//    }
+    init(savedRecipeId id: Int) {
+        let recipeManager = RecipeDataManager()
+        singleRecipe = Single<Recipe>.create{
+            single in
+            do{
+                let recipe = try recipeManager.getRecipe(withId: id)
+                single(.success(recipe))
+            }catch{
+                print("DataManagerError: Not Found Recipe With id = \(id)")
+            }
+            return Disposables.create()
+        }
+        
+        saved = Observable<Bool>.create{ observable in
+            observable.onNext(true)
+            return Disposables.create()
+        }
+    }
     
     func fetchResult(recipeId: Int) {
         recipeAPIManager.fetchRecipeWith(recipeId: recipeId) { (result) in

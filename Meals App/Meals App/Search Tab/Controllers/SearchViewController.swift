@@ -9,73 +9,89 @@ class SearchViewController: UIViewController, UISearchBarDelegate, QueryDelegate
     
     @IBOutlet weak var recentSearchTable: UITableView!
     var viewModel = SearchViewViewModel()
-    
 
     let HeaderReuseIdentifier = "RecentSearchHeader"
-    
-  
+    let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        CustomizeNavBar()
-        setupTable(recentSearchTable)
-        viewModel.recentSearch.bind { [unowned self] (recent) in
+        customizeNavBar()
+        //setupTable(recentSearchTable)
+        recentSearchTable.rx.setDelegate(self).disposed(by: disposeBag)
+        recentSearchTable.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        recentSearchTable.register(UINib(nibName: HeaderReuseIdentifier, bundle: nil), forHeaderFooterViewReuseIdentifier: HeaderReuseIdentifier)
+        
+        recentSearchTable.rx.modelSelected(String.self)
+            .subscribe{ query in
+                self.navigationItem.searchController?.searchBar.text =  query.element
+                self.navigationItem.searchController?.isActive = true
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.recentSearch.subscribe { event in
             self.recentSearchTable.isHidden = false
-            if recent.count == 0{
+            guard let queries = event.element else {
+                self.recentSearchTable.isHidden = true
+                return
+            }
+            if queries.isEmpty {
                 self.recentSearchTable.isHidden = true
             }
-            DispatchQueue.main.async {
-                self.recentSearchTable.reloadData()
-            }
         }
+        .disposed(by: disposeBag)
+        
+        DispatchQueue.main.async {
+            self.viewModel.recentSearch
+                .bind(to: self.recentSearchTable.rx.items(cellIdentifier: "Cell")){
+                row, recent, cell in
+                cell.textLabel?.text = recent
+                cell.textLabel?.textColor = .systemGreen
+                cell.textLabel?.font = UIFont.systemFont(ofSize: 18)
+
+            }
+            .disposed(by: self.disposeBag)
+        }
+        
+        navigationItem.searchController?.searchBar.rx.text
+            .debounce(.seconds(5), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { query in
+                guard let query = query else { return }
+                if query.count >= 3 {
+                    self.viewModel.updateRecentWith(newQuery: query)
+                }
+            })
+            .disposed(by: disposeBag)
     }
 
-
-   func CustomizeNavBar(){
-            let searchStoryboard : UIStoryboard? = UIStoryboard(name: "SearchResults", bundle: nil)
-            let resultsView = searchStoryboard?.instantiateViewController(withIdentifier: "searchResultsTable") as! SearchResultsController
-            resultsView.resultsDelegate = self
-            resultsView.queryDelegate = self
-    
-            let search = UISearchController(searchResultsController: resultsView)
-            resultsView.searchController = search
-            search.searchResultsUpdater = (resultsView as UISearchResultsUpdating)
    
-            navigationItem.searchController = search
+
+   func customizeNavBar(){
+        let searchStoryboard : UIStoryboard? = UIStoryboard(name: "SearchResults", bundle: nil)
+        let resultsView = searchStoryboard?.instantiateViewController(withIdentifier: "searchResultsTable") as! SearchResultsController
+        resultsView.resultsDelegate = self
+        resultsView.queryDelegate = self
+    
+        let search = UISearchController(searchResultsController: resultsView)
+        resultsView.searchController = search
+        search.searchResultsUpdater = (resultsView as UISearchResultsUpdating)
+        navigationItem.searchController = search
+    
     }
     
     func addToRecent(query: String) {
-        viewModel.updateRecent(newQuery: query)
+       // viewModel.updateRecent(newQuery: query)
     
     }
     
     func setupTable(_ table : UITableView){
-        table.dataSource = self
-        table.delegate = self
-        table.register(UINib(nibName: HeaderReuseIdentifier, bundle: nil), forHeaderFooterViewReuseIdentifier: HeaderReuseIdentifier)
+        table.dataSource = nil
+        table.delegate = nil
+        
     }
 }
 
-extension SearchViewController :  UITableViewDataSource, UITableViewDelegate{
-    
-    // MARK: Setup TableView Cells
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        navigationItem.searchController?.searchBar.text = tableView.cellForRow(at: indexPath)?.textLabel?.text
-        navigationItem.searchController?.isActive = true
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
-        cell.textLabel?.text = viewModel.recentSearch.value[indexPath.row]
-        cell.textLabel?.textColor = .systemGreen
-        cell.textLabel?.font = UIFont.systemFont(ofSize: 18)
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.recentSearch.value.count
-    }
-    
+extension SearchViewController :  UITableViewDelegate{
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
@@ -93,19 +109,18 @@ extension SearchViewController :  UITableViewDataSource, UITableViewDelegate{
 }
 
 extension SearchViewController : RecentDelegate, RecipeResultsDelegate {
- 
-    
+
     func clearRecent() {
-        viewModel.recentSearch.value = [String]()
-        viewModel.updateUD()
+        viewModel.clearRecent()
+        recentSearchTable.isHidden = true
     }
     
     func didSelectResult(recipe: Recipe) {
-           let view = storyboard?.instantiateViewController(withIdentifier: "recipe") as! RecipeViewController
+        let view = storyboard?.instantiateViewController(withIdentifier: "recipe") as! RecipeViewController
         view.id = recipe.id
         //view.viewModel = RecipeViewViewModel(saveTap: view.headerView.save.rx.tap.asObservable(), recipeID: recipe.id)
     
-           navigationController?.pushViewController(view, animated: true)
+        navigationController?.pushViewController(view, animated: true)
     }
     
 }

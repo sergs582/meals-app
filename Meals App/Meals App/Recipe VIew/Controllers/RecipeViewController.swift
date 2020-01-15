@@ -28,7 +28,6 @@ class RecipeViewController: UIViewController, UIScrollViewDelegate, HeaderViewDe
         scrollView.delegate = self
         setupNavigationBar()
         headerView.delegate = self
-        headerView.commonInit()
         commonInit(recipe: Recipe(title: "Title", information: [], ingredients: [], savedIngredients: [], instruction: []))
         setupViewModel()
     }
@@ -39,9 +38,7 @@ class RecipeViewController: UIViewController, UIScrollViewDelegate, HeaderViewDe
     }
     
     func commonInit(recipe: Recipe){
-        
         headerView.setupHW(imageURL: URL(string: recipe.imageURL), image: recipe.image, title: recipe.title)
-        
         infoCollection.commonInit(information: recipe.information)
         ingredientsCollection.commonInit(ingredients: recipe.ingredients, savedIngredients: recipe.savedIngredients)
         ingredientsCollection.reloadData()
@@ -51,13 +48,15 @@ class RecipeViewController: UIViewController, UIScrollViewDelegate, HeaderViewDe
         }
     }
     func setupViewModel(){
+        if viewModel == nil{
         viewModel = RecipeViewViewModel(saveTap: headerView.save.rx.tap.asObservable(), recipeID: id)
+        }
         
         viewModel.singleRecipe
             .subscribe(
                 onSuccess: { recipe in
                     DispatchQueue.main.async {
-                        self.commonInit(recipe: recipe.toRecipe())
+                        self.commonInit(recipe: recipe)
                     }
                 },
                 onError: { error in

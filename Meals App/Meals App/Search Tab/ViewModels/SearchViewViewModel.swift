@@ -7,30 +7,30 @@
 //
 
 import Foundation
+import RxSwift
+import RxRelay
 
 class SearchViewViewModel {
     
-    var recentSearch : Box<[String]> = Box([])
+    var recentSearch : BehaviorRelay<[String]>
+    let recentSearchManager = RecentSearchManager()
     private var userDefaults = UserDefaults.standard
 
-    func updateRecent(newQuery query: String) {
-        if !recentSearch.value.contains(query) {
-        recentSearch.value.insert(query, at: 0)
-        
-          if recentSearch.value.count >= 4 {
-            recentSearch.value.removeLast()
-          }
-          updateUD()
-        }
+    func updateRecentWith(newQuery query: String) {
+        let newQueries = recentSearchManager.addQuery(query)
+        recentSearch.accept(newQueries)
+
     }
     
-    func updateUD(){
-        userDefaults.set(recentSearch.value, forKey: "Recent")
+    func clearRecent(){
+        recentSearchManager.clear()
+        recentSearch.accept([])
     }
     
     init(){
-        recentSearch.value = userDefaults.value(forKey: "Recent") as? [String] ?? []
-       
+        let queries = recentSearchManager.getRecentSearchQueries()
+        recentSearch = BehaviorRelay<[String]>(value: queries)
     }
+    
     
 }
