@@ -38,10 +38,7 @@ struct RecipeResponse: Decodable {
     }
 }
 
-
-
-
-struct Recipe{
+struct Recipe {
     var id = 0
     var title = ""
     var imageURL = ""

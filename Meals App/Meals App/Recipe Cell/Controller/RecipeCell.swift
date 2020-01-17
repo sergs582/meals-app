@@ -20,7 +20,7 @@ class RecipeCell: UITableViewCell {
         super.awakeFromNib()
     }
     
-    func commonInit(){
+    func commonInit() {
         title.text = titleText
         shortDescription.text = descriptionText
         

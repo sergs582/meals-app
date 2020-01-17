@@ -14,53 +14,21 @@ class RecipeViewViewModel {
     var recipeManager = RecipeDataManager()
     var singleRecipe : Single<Recipe>
     let disposeBag = DisposeBag()
-    var saved: Observable<Bool>
-
-    var recipeAPIManager =
-        APIRecipeManager(apiKey: "b9b785cbea634d2c82b2b9855cf33756")
-        //StubApiRecipManager()
+    var saved: Observable<Bool>?
+    var dataManager: DataManager
     
-    init(saveTap: Observable<Void>, recipeID: Int){
-        let recipeManager = RecipeDataManager()
-        singleRecipe = recipeAPIManager.fetchRecipeWith(recipeId: recipeID)
+    init(recipeID: Int, dataManager: DataManager) {
+        self.dataManager = dataManager
+        singleRecipe = dataManager.getRecipe(withID: recipeID)
         
-        saved = saveTap.withLatestFrom(self.singleRecipe.asObservable())
+    }
+    
+    func setup(input: Observable<Void>) {
+        saved = input.withLatestFrom(self.singleRecipe.asObservable())
         .flatMapLatest { recipe in
-            return recipeManager.saveRecipe(recipe: recipe)
-                .observeOn(MainScheduler.instance)
-                .catchErrorJustReturn(false)
+            return self.recipeManager.saveRecipe(recipe: recipe)
+        .observeOn(MainScheduler.instance)
+        .catchErrorJustReturn(false)
         }
-    }
-    
-    init(savedRecipeId id: Int) {
-        let recipeManager = RecipeDataManager()
-        singleRecipe = Single<Recipe>.create{
-            single in
-            do{
-                let recipe = try recipeManager.getRecipe(withId: id)
-                single(.success(recipe))
-            }catch{
-                print("DataManagerError: Not Found Recipe With id = \(id)")
-            }
-            return Disposables.create()
-        }
-        
-        saved = Observable<Bool>.create{ observable in
-            observable.onNext(true)
-            return Disposables.create()
-        }
-    }
-    
-    func fetchResult(recipeId: Int) {
-        recipeAPIManager.fetchRecipeWith(recipeId: recipeId) { (result) in
-            switch result {
-                case .Success(_):
-                print("")
-                    //self.recipeSubject.onNext(recipe.toRecipe())
-                case .Failure(let error):
-                    print(error)
-            }
-        }
-        
     }
 }

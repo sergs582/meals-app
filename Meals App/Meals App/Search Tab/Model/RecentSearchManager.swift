@@ -18,12 +18,11 @@ class RecentSearchManager{
         return queries
     }
     
-    func clear(){
+    func clear() {
         ud.set([String](), forKey: key)
     }
     
     func addQuery(_ query: String) -> [String] {
-        
         var queries = ud.value(forKey: key) as? [String] ?? []
         if !queries.contains(query){
             queries.insert(query, at: 0)

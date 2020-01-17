@@ -19,18 +19,15 @@ class SearchViewViewModel {
     func updateRecentWith(newQuery query: String) {
         let newQueries = recentSearchManager.addQuery(query)
         recentSearch.accept(newQueries)
-
     }
     
-    func clearRecent(){
+    func clearRecent() {
         recentSearchManager.clear()
         recentSearch.accept([])
     }
     
-    init(){
+    init() {
         let queries = recentSearchManager.getRecentSearchQueries()
         recentSearch = BehaviorRelay<[String]>(value: queries)
     }
-    
-    
 }

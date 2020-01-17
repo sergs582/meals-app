@@ -24,7 +24,7 @@ class InfoCollectionViewCell : UICollectionViewCell{
         shadowToView(view)
     }
     
-    func commonInit(){
+    func commonInit() {
         label.text = title
         image.image = UIImage(named: imageName)
         switch imageName {
@@ -41,7 +41,7 @@ class InfoCollectionViewCell : UICollectionViewCell{
         }
     }
     
-    func shadowToView(_ view : UIView){
+    func shadowToView(_ view : UIView) {
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOffset = CGSize(width: 4, height: -1)
         view.layer.shadowOpacity = 0.5

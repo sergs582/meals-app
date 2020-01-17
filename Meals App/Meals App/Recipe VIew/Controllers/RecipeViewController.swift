@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class RecipeViewController: UIViewController, UIScrollViewDelegate, HeaderViewDelegate {
+class RecipeViewController: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet weak var headerView: HeaderView!
     @IBOutlet weak var instructions: UIStackView!
@@ -27,7 +27,6 @@ class RecipeViewController: UIViewController, UIScrollViewDelegate, HeaderViewDe
         disposeBag = DisposeBag()
         scrollView.delegate = self
         setupNavigationBar()
-        headerView.delegate = self
         commonInit(recipe: Recipe(title: "Title", information: [], ingredients: [], savedIngredients: [], instruction: []))
         setupViewModel()
     }
@@ -37,21 +36,18 @@ class RecipeViewController: UIViewController, UIScrollViewDelegate, HeaderViewDe
         self.navigationController?.navigationBar.shadowImage = nil
     }
     
-    func commonInit(recipe: Recipe){
-        headerView.setupHW(imageURL: URL(string: recipe.imageURL), image: recipe.image, title: recipe.title)
+    func commonInit(recipe: Recipe) {
+        headerView.commonInit(imageURL: URL(string: recipe.imageURL), image: recipe.image, title: recipe.title)
         infoCollection.commonInit(information: recipe.information)
         ingredientsCollection.commonInit(ingredients: recipe.ingredients, savedIngredients: recipe.savedIngredients)
         ingredientsCollection.reloadData()
-        guard recipe.instruction.count == 0 else{
+        if recipe.instruction.count == 0 {
             instructions.instructionInit(steps: recipe.instruction[0].steps)
-          return
         }
     }
-    func setupViewModel(){
-        if viewModel == nil{
-        viewModel = RecipeViewViewModel(saveTap: headerView.save.rx.tap.asObservable(), recipeID: id)
-        }
-        
+    
+    func setupViewModel() {
+        viewModel.setup(input: headerView.save.rx.tap.asObservable())
         viewModel.singleRecipe
             .subscribe(
                 onSuccess: { recipe in
@@ -64,12 +60,12 @@ class RecipeViewController: UIViewController, UIScrollViewDelegate, HeaderViewDe
                 })
             .disposed(by: disposeBag)
                  
-        viewModel.saved
+        viewModel.saved!
             .subscribe{ event in
                 if event.element! {
                     self.headerView.save.backgroundColor = .green
                     self.headerView.save.setTitle("Saved", for: .normal)
-                }else{
+                } else {
                     self.headerView.save.setTitle("Error", for: .normal)
                 }
 
@@ -77,11 +73,8 @@ class RecipeViewController: UIViewController, UIScrollViewDelegate, HeaderViewDe
             .disposed(by: disposeBag)
     }
     
-    func addToFavourite() {
-      //  viewModel.addToFavourite()
-    }
     
-    func setupNavigationBar(){
+    func setupNavigationBar() {
         topConstraint.constant = -(navigationController?.navigationBar.frame.height)! - statusBarHeight()
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
@@ -97,11 +90,11 @@ class RecipeViewController: UIViewController, UIScrollViewDelegate, HeaderViewDe
             return UIApplication.shared.statusBarFrame.height
         }
     }
-
 }
 
 fileprivate extension UIStackView {
-    func instructionInit(steps : [Step]){
+    
+    func instructionInit(steps : [Step]) {
         guard steps.count != 0 else { return }
         for i in 0..<steps.count{
             let step = InstructionStepView()

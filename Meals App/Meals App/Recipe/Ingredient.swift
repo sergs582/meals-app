@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-struct Ingredient : Codable{
+struct Ingredient : Codable {
     var name : String
     var image : String
     var measures : Measures
@@ -29,7 +29,7 @@ struct Ingredient : Codable{
     }
 }
 
-struct SavedIngredient{
+struct SavedIngredient {
     var name : String?
     var image : Data?
     var amount : String?

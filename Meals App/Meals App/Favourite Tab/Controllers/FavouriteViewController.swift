@@ -16,6 +16,7 @@ class FavouriteViewController: UIViewController, UITableViewDelegate{
     
     var iterator = 0
     let disposeBag = DisposeBag()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         recipesTable.dataSource = nil
@@ -47,14 +48,11 @@ class FavouriteViewController: UIViewController, UITableViewDelegate{
             .subscribe{
                 recipe in
                 let recipeView = self.storyboard?.instantiateViewController(withIdentifier: "recipe") as! RecipeViewController
-                recipeView.viewModel = RecipeViewViewModel(savedRecipeId: recipe.element!.id)
+                recipeView.viewModel = RecipeViewViewModel(recipeID: recipe.element!.id, dataManager: CoreDataRecipeManager())
                 self.navigationController?.pushViewController(recipeView, animated: true)
         }
     .disposed(by: disposeBag)
     
-                
-        
-        
     }
 }
 

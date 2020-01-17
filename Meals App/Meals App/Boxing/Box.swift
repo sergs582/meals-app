@@ -22,7 +22,7 @@ class Box<T> {
         self.value = value
     }
     
-    func bind(listener: Listener?){
+    func bind(listener: Listener?) {
         self.listener = listener
         listener?(value)
     }

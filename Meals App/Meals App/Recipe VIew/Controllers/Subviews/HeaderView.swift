@@ -26,26 +26,22 @@ class HeaderView: UIView {
         super.init(coder: coder)
     }
     
-    func commonInit(){
-        
-        
+    func commonInit(imageURL: URL?, image: Data?, title: String) {
+        self.imageURL = imageURL
+        self.title.text = title
+        save.layer.cornerRadius = 5
+        if let image = image{
+            self.headerImage.image = UIImage(data: image)
+        }else{
+            guard let imageURL = imageURL else { return }
+            self.headerImage.kf.setImage(with: imageURL)
+        }
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         Bundle.main.loadNibNamed("HeaderView", owner: self, options: nil)
         contentView.fixInView(self)
-    }
-    func setupHW(imageURL: URL?, image: Data?, title: String){
-        self.imageURL = imageURL
-        self.title.text = title
-        save.layer.cornerRadius = 5
-        if let image = image{
-          self.headerImage.image = UIImage(data: image)
-        }else{
-            guard let imageURL = imageURL else { return }
-            self.headerImage.kf.setImage(with: imageURL)
-        }
     }
 }
 

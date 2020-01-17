@@ -26,8 +26,7 @@ class SearchResultsController: UITableViewController, UISearchBarDelegate, UISea
         setupBinding()
     }
 
-    func setupBinding(){
-        
+    func setupBinding() {
         let recipes = searchController?.searchBar.rx.text.orEmpty
             .debounce(.seconds(1), scheduler: MainScheduler.instance)
             .distinctUntilChanged()

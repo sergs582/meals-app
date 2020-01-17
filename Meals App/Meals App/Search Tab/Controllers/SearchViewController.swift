@@ -5,8 +5,6 @@ import RxSwift
 
 class SearchViewController: UIViewController, UISearchBarDelegate, QueryDelegate {
     
-    
-    
     @IBOutlet weak var recentSearchTable: UITableView!
     var viewModel = SearchViewViewModel()
 
@@ -16,11 +14,9 @@ class SearchViewController: UIViewController, UISearchBarDelegate, QueryDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         customizeNavBar()
-        //setupTable(recentSearchTable)
         recentSearchTable.rx.setDelegate(self).disposed(by: disposeBag)
         recentSearchTable.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         recentSearchTable.register(UINib(nibName: HeaderReuseIdentifier, bundle: nil), forHeaderFooterViewReuseIdentifier: HeaderReuseIdentifier)
-        
         recentSearchTable.rx.modelSelected(String.self)
             .subscribe{ query in
                 self.navigationItem.searchController?.searchBar.text =  query.element
@@ -53,7 +49,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, QueryDelegate
         }
         
         navigationItem.searchController?.searchBar.rx.text
-            .debounce(.seconds(5), scheduler: MainScheduler.instance)
+            .debounce(.seconds(3), scheduler: MainScheduler.instance)
             .subscribe(onNext: { query in
                 guard let query = query else { return }
                 if query.count >= 3 {
@@ -65,7 +61,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, QueryDelegate
 
    
 
-   func customizeNavBar(){
+   func customizeNavBar() {
         let searchStoryboard : UIStoryboard? = UIStoryboard(name: "SearchResults", bundle: nil)
         let resultsView = searchStoryboard?.instantiateViewController(withIdentifier: "searchResultsTable") as! SearchResultsController
         resultsView.resultsDelegate = self
@@ -79,18 +75,16 @@ class SearchViewController: UIViewController, UISearchBarDelegate, QueryDelegate
     }
     
     func addToRecent(query: String) {
-       // viewModel.updateRecent(newQuery: query)
-    
     }
     
-    func setupTable(_ table : UITableView){
+    func setupTable(_ table : UITableView) {
         table.dataSource = nil
         table.delegate = nil
         
     }
 }
 
-extension SearchViewController :  UITableViewDelegate{
+extension SearchViewController :  UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
@@ -117,8 +111,7 @@ extension SearchViewController : RecentDelegate, RecipeResultsDelegate {
     
     func didSelectResult(recipe: Recipe) {
         let view = storyboard?.instantiateViewController(withIdentifier: "recipe") as! RecipeViewController
-        view.id = recipe.id
-        //view.viewModel = RecipeViewViewModel(saveTap: view.headerView.save.rx.tap.asObservable(), recipeID: recipe.id)
+        view.viewModel = RecipeViewViewModel(recipeID: recipe.id, dataManager: RecipeManager())
     
         navigationController?.pushViewController(view, animated: true)
     }

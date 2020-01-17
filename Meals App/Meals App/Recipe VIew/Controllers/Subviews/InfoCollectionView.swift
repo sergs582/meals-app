@@ -20,7 +20,7 @@ class InfoCollectionView: UICollectionView {
         self.register(UINib(nibName: InfoCellID, bundle: nil), forCellWithReuseIdentifier: InfoCellID)
     }
     
-    func commonInit(information: [RecipeInfo]){
+    func commonInit(information: [RecipeInfo]) {
         self.information = information
         self.reloadData()
     }

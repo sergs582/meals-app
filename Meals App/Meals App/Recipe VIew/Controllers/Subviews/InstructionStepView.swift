@@ -26,7 +26,7 @@ class InstructionStepView: UIView {
         super.awakeFromNib()
     }
     
-    func commonInit(index : Int, description : String){
+    func commonInit(index : Int, description : String) {
         Bundle.main.loadNibNamed("InstructionStepView", owner: self, options: nil)
         self.index.text = "\(index)"
         self.stepDescription.text = description
@@ -34,7 +34,6 @@ class InstructionStepView: UIView {
         self.index.layer.masksToBounds = true
         self.index.layer.cornerRadius = self.index.frame.height/2
         addSubview(contentView)
-        
     }
 
 }

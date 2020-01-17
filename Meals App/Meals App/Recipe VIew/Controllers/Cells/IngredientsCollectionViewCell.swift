@@ -24,7 +24,7 @@ class IngredientsCollectionViewCell: UICollectionViewCell {
     var imageURL : URL?
     var imageData : Data?
     
-    func commonInit(){
+    func commonInit() {
         setupContent(for: imageFrameView)
         nameLabel.text = name
         amountLabel.text = amountInMetric
@@ -36,7 +36,7 @@ class IngredientsCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func setupContent(for view : UIView){
+    func setupContent(for view : UIView) {
         width.constant = self.frame.width
         view.layer.cornerRadius = 15
         image.layer.cornerRadius = 15
@@ -44,11 +44,10 @@ class IngredientsCollectionViewCell: UICollectionViewCell {
         shadowToView(view)
     }
     
-    func shadowToView(_ view: UIView){
+    func shadowToView(_ view: UIView) {
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOffset = CGSize(width: 4, height: 2)
         view.layer.shadowRadius = 3
         view.layer.shadowOpacity = 0.5
     }
- 
 }

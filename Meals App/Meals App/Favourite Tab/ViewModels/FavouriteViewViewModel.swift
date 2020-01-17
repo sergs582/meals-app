@@ -15,14 +15,14 @@ class FavouriteViewViewModel {
    
     private var recipeManager = RecipeDataManager()
     
-    func deleteRecipeWith(index: Int){
+    func deleteRecipeWith(index: Int) {
         guard let changedRecipes = try? recipes.value() else { return }
         let id = changedRecipes[index].id
         recipeManager.deleteRecipe(withId: id)
         update()
     }
 
-    func update(){
+    func update() {
         recipes.onNext(recipeManager.toRecipeArray())
     }
     

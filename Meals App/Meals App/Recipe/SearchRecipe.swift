@@ -12,7 +12,7 @@ struct SearchRecipesResponse : Codable {
     var results : [SearchRecipe]
 }
 
-struct SearchRecipe : Codable{
+struct SearchRecipe : Codable {
     var id : Int
     var title : String
     var image : String
@@ -20,7 +20,7 @@ struct SearchRecipe : Codable{
         return URL(string: "https://spoonacular.com/recipeImages/\(self.image)")
     }
     
-    func toRecipe() -> Recipe{
+    func toRecipe() -> Recipe {
         return Recipe(id: id, title: title, imageURL: image)
     }
 }
