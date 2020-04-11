@@ -25,10 +25,10 @@ class RecipeViewViewModel {
     
     func setup(input: Observable<Void>) {
         saved = input.withLatestFrom(self.singleRecipe.asObservable())
-        .flatMapLatest { recipe in
-            return self.recipeManager.saveRecipe(recipe: recipe)
-        .observeOn(MainScheduler.instance)
-        .catchErrorJustReturn(false)
+            .flatMapLatest { recipe in
+                return self.recipeManager.saveRecipe(recipe: recipe)
+                    .observeOn(MainScheduler.instance)
+                    .catchErrorJustReturn(false)
         }
     }
 }
